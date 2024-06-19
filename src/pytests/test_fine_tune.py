@@ -50,23 +50,23 @@ def test_fine_tune_model(mock_trainer, mock_tokenizer, mock_model, mock_data, mo
     # Mock the model and tokenizer
     model_instance = MagicMock(spec=AutoModelForSequenceClassification)
     model_instance.to = MagicMock(return_value=model_instance)
-    
+
     # Set the attributes on the model class to mimic a PyTorch model
     mock_model_class = MagicMock(spec=AutoModelForSequenceClassification)
     mock_model_class.module = "torch"
     mock_model_class.name = "PreTrainedModel"
     mock_model_class.return_value = model_instance
-    
+
     mock_model.return_value = mock_model_class.return_value
     mock_tokenizer.return_value = MagicMock(spec=AutoTokenizer)
-    
+
     # Mock the Trainer's train, evaluate, and predict methods
     mock_trainer_instance = MagicMock(spec=Trainer)
     mock_trainer_instance.train.return_value = None
     mock_trainer_instance.evaluate.return_value = {"eval_loss": 0.5}
     mock_trainer_instance.predict.return_value = MagicMock(predictions=torch.tensor([[0.5, 0.5], [0.6, 0.4]]))
     mock_trainer.return_value = mock_trainer_instance
-    
+
     # Run the fine_tune_model function with mock arguments
     fine_tune_model(
         data_path=mock_args.data_path,
@@ -78,11 +78,11 @@ def test_fine_tune_model(mock_trainer, mock_tokenizer, mock_model, mock_data, mo
         output_dir=mock_args.output_dir,
         save_steps=mock_args.save_steps
     )
-    
+
     # Assert that the model and tokenizer were loaded correctly
     mock_model.assert_called_once_with(mock_args.model_name, num_labels=mock_args.num_labels)
     mock_tokenizer.assert_called_once_with(mock_args.model_name)
-    
+
     # Assert that the Trainer's train, evaluate, and predict methods were called
     mock_trainer_instance.train.assert_called_once()
     mock_trainer_instance.evaluate.assert_called_once()

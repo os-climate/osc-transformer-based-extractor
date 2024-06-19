@@ -1,4 +1,3 @@
-
 ---
 
 # Relevance Detector
@@ -11,7 +10,7 @@ This folder contains a set of scripts and notebooks designed to process data, tr
    - One must have data from the curator module, which is used for training of the model. The data from the curator module is a CSV file as follows:
 
    ### Example Snippet
-   
+
    | question                      | context                                                                                                                   | company | source_file                       | source_page | kpi_id | year | answer       | data_type | relevant_paragraphs                            | annotator          | Index | label |
    |-------------------------------|----------------------------------------------------------------------------------------------------------------------------|---------|-----------------------------------|-------------|--------|------|--------------|-----------|------------------------------------------------|---------------------|-------|-------|
    | What is the company name?     | The Company is exposed to a risk of by losses counterparties their contractual financial obligations when due, and in particular depends on the reliability of banks the Company deposits its available cash. | NOVATEK | 04_NOVATEK_AR_2016_ENG_11.pdf | ['0']       | 0      | 2016 | PAO NOVATEK  | TEXT      | ["PAO NOVATEK ANNUAL REPORT 2016"]            | train_anno_large.xlsx | 1022  | 0     |
@@ -22,7 +21,7 @@ This folder contains a set of scripts and notebooks designed to process data, tr
 
 2. **Train the Model**:
    - Use `train_sentence_transformer.ipynb` or `train_sentence_transformer.py` to train a sentence transformer model with the processed data from the `Data` folder and save it locally. Follow the steps in the notebook or script to configure and start the training process.
-   
+
    - To train the model using function calling
       ```python
      from train_sentence_transformer import fine_tune_model
@@ -46,7 +45,7 @@ This folder contains a set of scripts and notebooks designed to process data, tr
        - `batch_size (int)`: Batch size for training.
        - `output_dir (str)`: Directory to save the trained models.
        - `save_steps (int)`: Number of steps between saving checkpoints.
-   
+
    - To train the model from the command line, run `fine_tune.py` with the required arguments:
      ```bash
      python fine_tune.py \
@@ -76,7 +75,7 @@ This folder contains a set of scripts and notebooks designed to process data, tr
 1. **`inference.py`**
    - This script contains the function to make inferences using the trained model.
    - **Usage**: Import this script and use the provided function to predict the relevance of new data.
-   - **Example**: 
+   - **Example**:
      ```python
      from inference import get_inference
      result = get_inference(question="What is the relevance?", paragraph="This is a sample paragraph.", model_path="path/to/model", tokenizer_path="path/to/tokenizer")
@@ -94,7 +93,7 @@ This folder contains a set of scripts and notebooks designed to process data, tr
 3. **`train_sentence_transformer.py`**
    - This script defines a function to train a sentence transformer model, which can be called from other scripts or notebooks.
    - **Usage**: Import and call the `fine_tune_model` function to train your model.
-   - **Example**: 
+   - **Example**:
      ```python
      from train_sentence_transformer import fine_tune_model
      fine_tune_model(
@@ -121,7 +120,7 @@ This folder contains a set of scripts and notebooks designed to process data, tr
 4. **`fine_tune.py`**
    - This script allows you to train a sentence transformer model from the command line.
    - **Usage**: Run this script from the command line with the necessary arguments.
-   - **Example**: 
+   - **Example**:
      ```bash
      python fine_tune.py \
        --data_path "data/train_data.csv" \

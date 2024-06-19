@@ -18,12 +18,12 @@ def check_csv_columns(file_path):
 
     Raises:
         ValueError: If the file does not exist or does not contain the required columns.
-    """ 
+    """
     if not os.path.exists(file_path):
         raise ValueError(f"Data path {file_path} does not exist.")
-    
+
     required_columns = ["question", "context", "label"]
-    
+
     try:
         df = pd.read_csv(file_path)
         missing_columns = [col for col in required_columns if col not in df.columns]
@@ -180,7 +180,7 @@ if __name__ == "__main__":
 
     print(f"Model- {args.model_name} Trained and Saved Successfully at {args.output_dir}")
 
-''' 
+'''
 To run the file in CMD
 
 python fine_tune.py \
@@ -194,4 +194,3 @@ python fine_tune.py \
   --save_steps 500
 
 '''
-

@@ -25,10 +25,10 @@ dummy_curator_data = pd.DataFrame({"context": ["Lorem ipsum"], "kpi_id": [1], "l
 dummy_curator_data.to_csv(curator_data_path_valid, index=False)
 
 dummy_kpi_mapping = pd.DataFrame({
-    "kpi_id": [1], 
-    "question": ["What is the question?"], 
-    "sectors": ["Sector"], 
-    "add_year": [2022], 
+    "kpi_id": [1],
+    "question": ["What is the question?"],
+    "sectors": ["Sector"],
+    "add_year": [2022],
     "kpi_category": ["Category"]
 })
 dummy_kpi_mapping.to_csv(kpi_mapping_path_valid, index=False)

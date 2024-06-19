@@ -77,7 +77,7 @@ def make_training_data(curator_data_path: str, kpi_mapping_path: str, output_pat
         if isinstance(kpi_id, float) and kpi_id.is_integer():
             kpi_id = int(kpi_id)
         kpi_dict[kpi_id] = {
-            "question": row["question"], 
+            "question": row["question"],
             "sectors": row["sectors"],
             "add_year": row["add_year"],
             "kpi_category": row["kpi_category"],

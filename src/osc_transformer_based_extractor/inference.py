@@ -12,11 +12,11 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer
 def check_model_and_tokenizer_path(model_path, tokenizer_path):
     """
     Check if the model and tokenizer paths are valid.
-     
+
     Args:
         model_path (str): Path to the model file.
         tokenizer_path (str): Path to the tokenizer file.
-        
+
     Raises:
         ValueError: If the model or tokenizer path does not exist.
     """
@@ -25,7 +25,7 @@ def check_model_and_tokenizer_path(model_path, tokenizer_path):
 
     if not os.path.exists(tokenizer_path):
         raise ValueError(f"Tokenizer path {tokenizer_path} does not exist.")
-    
+
 
 def check_question_context(question, context):
     if not isinstance(question, str):
@@ -93,8 +93,8 @@ if __name__ == "__main__":
 
 
 
-'''python inference.py 
-    --question "What is the capital of France?" 
-    --context "Paris is the capital of France." 
-    --model_path /path/to/model    
+'''python inference.py
+    --question "What is the capital of France?"
+    --context "Paris is the capital of France."
+    --model_path /path/to/model
     --tokenizer_path /path/to/tokenizer'''

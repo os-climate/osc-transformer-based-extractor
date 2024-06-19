@@ -9,7 +9,7 @@ from src.osc_transformer_based_extractor.fine_tune import check_csv_columns, che
 class MockTrainer:
     def train(self):
         pass
-    
+
     def evaluate(self, dataset):
         return {"eval_loss": 0.1, "eval_accuracy": 0.95}
 
@@ -84,7 +84,7 @@ def test_fine_tune_model(mock_trainer, tmp_path):
         max_length=512,
         epochs=2,
         batch_size=4,
-        output_dir=str(tmp_path / "saved_models"), 
+        output_dir=str(tmp_path / "saved_models"),
         save_steps=500
     )
 
