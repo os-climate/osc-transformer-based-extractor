@@ -64,7 +64,7 @@ This folder contains a set of scripts and notebooks designed to process data, tr
    - For programmatic inference, you can use the function provided in `inference.py`:
      ```python
      from inference import get_inference
-     result = get_inference(question="What is the relevance?", paragraph="This is a sample paragraph.", model_path="path/to/model", tokenizer_path="path/to/tokenizer")
+     result = get_inference(question="What is the relevance?", context="This is a sample paragraph.", model_path="path/to/model", tokenizer_path="path/to/tokenizer")
      ```
 
 
@@ -78,7 +78,7 @@ This folder contains a set of scripts and notebooks designed to process data, tr
    - **Example**:
      ```python
      from inference import get_inference
-     result = get_inference(question="What is the relevance?", paragraph="This is a sample paragraph.", model_path="path/to/model", tokenizer_path="path/to/tokenizer")
+     result = get_inference(question="What is the relevance?", context="This is a sample paragraph.", model_path="path/to/model", tokenizer_path="path/to/tokenizer")
      ```
      **Parameters**:
        - `question (str)`: The question for inference.

@@ -1,3 +1,14 @@
+"""
+osc_transformer_based_extractor: CLI for transformer-based model tasks.
+
+This module provides command-line interface (CLI) commands for performing tasks such as fine-tuning a transformer model
+and performing inference using a pre-trained model. The CLI is built using Typer, a library for creating command-line interfaces.
+
+Example usage:
+  python main.py fine_tune data.csv bert-base-uncased 5 128 3 32 trained_models/ 500
+  python main.py perform_inference "What is the main idea?" "This is the context." trained_model/ tokenizer/
+"""
+
 import sys
 import os
 import typer
@@ -20,29 +31,18 @@ def callback(ctx: typer.Context):
         typer.echo(ctx.get_help())
         raise typer.Exit()
 
-'''@app.command()
-def make_training_data_from_curator(curator_data_path: str, kpi_mapping_path: str, output_path: str):
-    """
-    Make training data from curator data.
-
-    Example:
-      python main.py make_training_data_from_curator data.csv mappings.csv output/
-    """
-    check_curator_data_path(curator_data_path)
-    check_kpi_mapping_path(kpi_mapping_path)
-    check_output_path(output_path)
-
-    make_training_data(
-        curator_data_path=curator_data_path,
-        kpi_mapping_path=kpi_mapping_path,
-        output_path=output_path
-    )
-
-    typer.echo(f"Training data created at: {output_path}")'''
-
 
 @app.command()
-def fine_tune(data_path: str, model_name: str, num_labels: int, max_length: int, epochs: int, batch_size: int, output_dir: str, save_steps: int):
+def fine_tune(
+    data_path: str = typer.Argument(..., help="Path to the CSV file containing training data."),
+    model_name: str = typer.Argument(..., help="Name of the pre-trained Hugging Face model."),
+    num_labels: int = typer.Argument(..., help="Number of labels for the classification task."),
+    max_length: int = typer.Argument(..., help="Maximum length of the sequences."),
+    epochs: int = typer.Argument(..., help="Number of training epochs."),
+    batch_size: int = typer.Argument(..., help="Batch size for training."),
+    output_dir: str = typer.Argument(..., help="Directory to save the fine-tuned model."),
+    save_steps: int = typer.Argument(..., help="Number of steps between saving model checkpoints.")
+):
     """
     Fine-tune a pre-trained Hugging Face model on a custom dataset.
 
@@ -67,7 +67,12 @@ def fine_tune(data_path: str, model_name: str, num_labels: int, max_length: int,
 
 
 @app.command()
-def perform_inference(question: str, context: str, model_path: str, tokenizer_path: str):
+def perform_inference(
+    question: str = typer.Argument(..., help="The question to be answered."),
+    context: str = typer.Argument(..., help="The context or paragraph related to the question."),
+    model_path: str = typer.Argument(..., help="Path to the pre-trained model directory."),
+    tokenizer_path: str = typer.Argument(..., help="Path to the tokenizer directory.")
+):
     """
     Perform inference using a pre-trained sequence classification model.
 
