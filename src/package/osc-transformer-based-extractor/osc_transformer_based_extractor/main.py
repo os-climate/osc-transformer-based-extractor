@@ -1,8 +1,9 @@
 """
 osc_transformer_based_extractor: CLI for transformer-based model tasks.
 
-This module provides command-line interface (CLI) commands for performing tasks such as fine-tuning a transformer model
-and performing inference using a pre-trained model. The CLI is built using Typer, a library for creating command-line interfaces.
+This module provides command-line interface (CLI) commands for performing tasks such 
+as fine-tuning a transformer model and performing inference using a pre-trained model. 
+The CLI is built using Typer, a library for creating command-line interfaces.
 
 Example usage:
   python main.py fine_tune data.csv bert-base-uncased 5 128 3 32 trained_models/ 500
@@ -79,8 +80,6 @@ def perform_inference(
     Example:
       python main.py perform_inference "What is the main idea?" "This is the context." trained_model/ tokenizer/
     """
-
-    print(type(question), type(context))
 
     try:
         check_question_context(question, context)

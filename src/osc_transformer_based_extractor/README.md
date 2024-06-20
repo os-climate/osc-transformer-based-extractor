@@ -1,3 +1,5 @@
+The error you're encountering is due to incorrect numbering in the ordered lists of your markdown file. Markdown expects a consistent numbering style for ordered lists. Here's the corrected version of your README.md file:
+
 ---
 
 # Relevance Detector
@@ -6,23 +8,20 @@ This folder contains a set of scripts and notebooks designed to process data, tr
 
 ## How to Use This Repository
 
-1. **Prepare Training Data**:
+1. **Get Training Data**:
    - One must have data from the curator module, which is used for training of the model. The data from the curator module is a CSV file as follows:
 
    ### Example Snippet
 
-   | question                      | context                                                                                                                   | company | source_file                       | source_page | kpi_id | year | answer       | data_type | relevant_paragraphs                            | annotator          | Index | label |
-   |-------------------------------|----------------------------------------------------------------------------------------------------------------------------|---------|-----------------------------------|-------------|--------|------|--------------|-----------|------------------------------------------------|---------------------|-------|-------|
-   | What is the company name?     | The Company is exposed to a risk of by losses counterparties their contractual financial obligations when due, and in particular depends on the reliability of banks the Company deposits its available cash. | NOVATEK | 04_NOVATEK_AR_2016_ENG_11.pdf | ['0']       | 0      | 2016 | PAO NOVATEK  | TEXT      | ["PAO NOVATEK ANNUAL REPORT 2016"]            | train_anno_large.xlsx | 1022  | 0     |
-
-   - If you have CSV data from the curator module, run `make_training_data_from_curator.py` to process and save it in the `Data` folder.
-   - Alternatively, you can use `make_sample_training_data.ipynb` to generate sample data from a sample CSV file.
+  | question                      | context                                                                                                                   | label | company | source_file                       | source_page | kpi_id | year | answer       | data_type | annotator              | Index |
+|-------------------------------|----------------------------------------------------------------------------------------------------------------------------|-------|---------|-----------------------------------|-------------|--------|------|--------------|-----------|------------------------|-------|
+| What is the company name?     | The Company is exposed to a risk of by losses counterparties their contractual financial obligations when due, and in particular depends on the reliability of banks the Company deposits its available cash. | 0     | NOVATEK | 04_NOVATEK_AR_2016_ENG_11.pdf | ['0']       | 0      | 2016 | PAO NOVATEK  | TEXT      | train_anno_large.xlsx  | 1022  |
 
 
 2. **Train the Model**:
    - Use `train_sentence_transformer.ipynb` or `train_sentence_transformer.py` to train a sentence transformer model with the processed data from the `Data` folder and save it locally. Follow the steps in the notebook or script to configure and start the training process.
 
-   - To train the model using function calling
+   - To train the model using function calling:
       ```python
      from train_sentence_transformer import fine_tune_model
      fine_tune_model(
@@ -67,7 +66,6 @@ This folder contains a set of scripts and notebooks designed to process data, tr
      result = get_inference(question="What is the relevance?", context="This is a sample paragraph.", model_path="path/to/model", tokenizer_path="path/to/tokenizer")
      ```
 
-
 ## Repository Contents
 
 ### Python Scripts
@@ -86,11 +84,7 @@ This folder contains a set of scripts and notebooks designed to process data, tr
        - `model_path (str)`: Path to the pre-trained model.
        - `tokenizer_path (str)`: Path to the tokenizer of the pre-trained model.
 
-2. **`make_training_data_from_curator.py`**
-   - This script processes CSV data obtained from a module named `curator` to make it suitable for training the model.
-   - **Usage**: Run this script to generate training data from the curator's output and save it in the `Data` folder.
-
-3. **`train_sentence_transformer.py`**
+2. **`train_sentence_transformer.py`**
    - This script defines a function to train a sentence transformer model, which can be called from other scripts or notebooks.
    - **Usage**: Import and call the `fine_tune_model` function to train your model.
    - **Example**:
@@ -117,7 +111,7 @@ This folder contains a set of scripts and notebooks designed to process data, tr
        - `output_dir (str)`: Directory to save the trained models.
        - `save_steps (int)`: Number of steps between saving checkpoints.
 
-4. **`fine_tune.py`**
+3. **`fine_tune.py`**
    - This script allows you to train a sentence transformer model from the command line.
    - **Usage**: Run this script from the command line with the necessary arguments.
    - **Example**:
@@ -140,11 +134,7 @@ This folder contains a set of scripts and notebooks designed to process data, tr
    - **Features**: Allows specifying model and tokenizer paths, which can be local paths or HuggingFace paths.
    - **Usage**: Open this notebook and follow the instructions to test inference with your own models.
 
-2. **`make_sample_training_data.ipynb`**
-   - This notebook was used to create sample training data from a sample CSV file.
-   - **Usage**: Open and run this notebook to understand the process of creating sample data for training.
-
-3. **`train_sentence_transformer.ipynb`**
+2. **`train_sentence_transformer.ipynb`**
    - A notebook to train a sentence transformer model and save the trained model locally.
    - **Usage**: Open and execute this notebook to train your model using the prepared data and save the trained model for inference.
 
@@ -152,7 +142,6 @@ This folder contains a set of scripts and notebooks designed to process data, tr
 
 - **`Data/`**
   - This folder contains the processed training data obtained from the `curator` module. It serves as the input for training the sentence transformer model.
-
 
 ## Setting Up the Environment
 
@@ -198,3 +187,5 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 ---
 
 For further details and documentation, please refer to the individual scripts and notebooks provided in this repository.
+
+---
