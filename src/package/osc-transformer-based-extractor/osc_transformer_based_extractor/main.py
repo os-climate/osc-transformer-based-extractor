@@ -9,14 +9,15 @@ Example usage:
   python main.py perform_inference "What is the main idea?" "This is the context." trained_model/ tokenizer/
 """
 
-import sys
-import os
-import typer
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../osc_transformer_based_extractor')))
 from fine_tune import check_csv_columns, check_output_dir, fine_tune_model
 from inference import check_model_and_tokenizer_path, check_question_context, get_inference
+import os
+import sys
+import typer
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../osc_transformer_based_extractor')))
 
 app = typer.Typer()
+
 
 @app.callback(invoke_without_command=True)
 def callback(ctx: typer.Context):
