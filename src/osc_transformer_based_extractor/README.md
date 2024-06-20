@@ -9,9 +9,9 @@ This folder contains a set of scripts and notebooks designed to process data, tr
 
 - One must have data from the curator module, which is used for training of the model. The data from the curator module is a CSV file as follows:
 
-  | question                      | context                                                                                                                   | label | company | source_file                       | source_page | kpi_id | year | answer       | data_type | annotator              | Index |
-|-------------------------------|----------------------------------------------------------------------------------------------------------------------------|-------|---------|-----------------------------------|-------------|--------|------|--------------|-----------|------------------------|-------|
-| What is the company name?     | The Company is exposed to a risk of by losses counterparties their contractual financial obligations when due, and in particular depends on the reliability of banks the Company deposits its available cash. | 0     | NOVATEK | 04_NOVATEK_AR_2016_ENG_11.pdf | ['0']       | 0      | 2016 | PAO NOVATEK  | TEXT      | train_anno_large.xlsx  | 1022  |
+  | question                  | context                                                                                                                                                                                                       | label | company | source_file                   | source_page | kpi_id | year | answer      | data_type | annotator             | Index |
+  | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- | ------- | ----------------------------- | ----------- | ------ | ---- | ----------- | --------- | --------------------- | ----- |
+  | What is the company name? | The Company is exposed to a risk of by losses counterparties their contractual financial obligations when due, and in particular depends on the reliability of banks the Company deposits its available cash. | 0     | NOVATEK | 04_NOVATEK_AR_2016_ENG_11.pdf | ['0']       | 0      | 2016 | PAO NOVATEK | TEXT      | train_anno_large.xlsx | 1022  |
 
 - If you have CSV data from the curator module, run `make_training_data_from_curator.py` to process and save it in the `Data` folder.
 - Alternatively, you can use `make_sample_training_data.ipynb` to generate sample data from a sample CSV file.
@@ -21,17 +21,18 @@ This folder contains a set of scripts and notebooks designed to process data, tr
    - Use `train_sentence_transformer.ipynb` or `train_sentence_transformer.py` to train a sentence transformer model with the processed data from the `Data` folder and save it locally. Follow the steps in the notebook or script to configure and start the training process.
 
    - To train the model using function calling:
-      ```python
+
+     ```python
      from train_sentence_transformer import fine_tune_model
      fine_tune_model(
-        data_path="data/train_data.csv",
-        model_name="sentence-transformers/all-MiniLM-L6-v2",
-        num_labels=2,
-        max_length=512,
-        epochs=2,
-        batch_size=4,
-        output_dir="./saved_models_during_training",
-        save_steps=500
+       data_path="data/train_data.csv",
+       model_name="sentence-transformers/all-MiniLM-L6-v2",
+       num_labels=2,
+       max_length=512,
+       epochs=2,
+       batch_size=4,
+       output_dir="./saved_models_during_training",
+       save_steps=500
      )
      ```
 
@@ -93,6 +94,7 @@ This folder contains a set of scripts and notebooks designed to process data, tr
      - `tokenizer_path (str)`: Path to the tokenizer of the pre-trained model.
 
 2. **`train_sentence_transformer.py`**
+
    - This script defines a function to train a sentence transformer model, which can be called from other scripts or notebooks.
    - **Usage**: Import and call the `fine_tune_model` function to train your model.
    - **Example**:
@@ -123,6 +125,7 @@ This folder contains a set of scripts and notebooks designed to process data, tr
      - `save_steps (int)`: Number of steps between saving checkpoints.
 
 3. **`fine_tune.py`**
+
    - This script allows you to train a sentence transformer model from the command line.
    - **Usage**: Run this script from the command line with the necessary arguments.
    - **Example**:
