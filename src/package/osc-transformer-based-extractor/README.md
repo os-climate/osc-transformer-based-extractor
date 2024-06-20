@@ -1,8 +1,6 @@
-Sure! Here is a sample README for your installable package:
-
----
-
 # OSC Transformer-Based Extractor
+
+Here is a sample README for your installable package
 
 ## Overview
 

@@ -101,12 +101,9 @@ if __name__ == "__main__":
 
     print(f"Predicted Label ID: {result}")
 
-'''
-To run the file in CMD:
 
-python inference.py \
-  --question "What is the capital of France?" \
-  --context "Paris is the capital of France." \
-  --model_path /path/to/model \
-  --tokenizer_path /path/to/tokenizer
-'''
+'''python inference.py
+    --question "What is the capital of France?"
+    --context "Paris is the capital of France."
+    --model_path /path/to/model
+    --tokenizer_path /path/to/tokenizer'''
