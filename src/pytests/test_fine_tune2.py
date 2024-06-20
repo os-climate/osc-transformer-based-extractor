@@ -29,7 +29,7 @@ from src.osc_transformer_based_extractor.fine_tune import check_csv_columns, che
 
 class MockTrainer:
     """Mocked Trainer class to simulate training and evaluation."""
-    
+
     def train(self):
         """Simulate the training process."""
         pass
