@@ -9,7 +9,6 @@ Example usage:
   python main.py fine_tune data.csv bert-base-uncased 5 128 3 32 trained_models/ 500
   python main.py perform_inference "What is the main idea?" "This is the context." trained_model/ tokenizer/
 """
-
 from fine_tune import check_csv_columns, check_output_dir, fine_tune_model
 from inference import check_model_and_tokenizer_path, check_question_context, get_inference
 import os
@@ -81,7 +80,6 @@ def perform_inference(
     Example:
       python main.py perform_inference "What is the main idea?" "This is the context." trained_model/ tokenizer/
     """
-
     try:
         check_question_context(question, context)
         check_model_and_tokenizer_path(model_path, tokenizer_path)
