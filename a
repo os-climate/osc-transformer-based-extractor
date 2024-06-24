@@ -43,7 +43,7 @@ commands =
 [testenv:lint]
 description = Perform static analysis and style checks
 skip_install = True
-deps = 
+deps =
     pre-commit
     mypy
 passenv =
