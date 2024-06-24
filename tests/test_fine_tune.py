@@ -18,6 +18,11 @@ data = {
         "Machine learning is a subset of AI focused on learning from data.",
     ],
     "label": [1, 0],
+    "context": [
+        "AI is the field of study focused on creating intelligent agents.",
+        "Machine learning is a subset of AI focused on learning from data.",
+    ],
+    "label": [1, 0],
 }
 df = pd.DataFrame(data)
 mock_csv_path = "mock_data.csv"
@@ -48,12 +53,16 @@ def mock_args():
         output_dir = mock_output_dir
         save_steps = 10
 
+
     return Args()
 
 
 @patch("transformers.AutoModelForSequenceClassification.from_pretrained")
 @patch("transformers.AutoTokenizer.from_pretrained")
 @patch("transformers.Trainer")
+def test_fine_tune_model(
+    mock_trainer, mock_tokenizer, mock_model, mock_data, mock_args
+):
 def test_fine_tune_model(
     mock_trainer, mock_tokenizer, mock_model, mock_data, mock_args
 ):
@@ -77,6 +86,9 @@ def test_fine_tune_model(
     mock_trainer_instance.predict.return_value = MagicMock(
         predictions=torch.tensor([[0.5, 0.5], [0.6, 0.4]])
     )
+    mock_trainer_instance.predict.return_value = MagicMock(
+        predictions=torch.tensor([[0.5, 0.5], [0.6, 0.4]])
+    )
     mock_trainer.return_value = mock_trainer_instance
 
     # Run the fine_tune_model function with mock arguments
@@ -89,9 +101,13 @@ def test_fine_tune_model(
         batch_size=mock_args.batch_size,
         output_dir=mock_args.output_dir,
         save_steps=mock_args.save_steps,
+        save_steps=mock_args.save_steps,
     )
 
     # Assert that the model and tokenizer were loaded correctly
+    mock_model.assert_called_once_with(
+        mock_args.model_name, num_labels=mock_args.num_labels
+    )
     mock_model.assert_called_once_with(
         mock_args.model_name, num_labels=mock_args.num_labels
     )
@@ -119,6 +135,10 @@ def test_check_csv_columns():
         ValueError,
         match="CSV file must contain the columns: \\['question', 'context', 'label'\\]. Missing columns: \\['label'\\]",
     ):
+    with pytest.raises(
+        ValueError,
+        match="CSV file must contain the columns: \\['question', 'context', 'label'\\]. Missing columns: \\['label'\\]",
+    ):
         check_csv_columns(invalid_csv_path)
     os.remove(invalid_csv_path)
 
@@ -131,12 +151,18 @@ def test_check_output_dir():
     with pytest.raises(
         ValueError, match="Output directory invalid_output_dir does not exist."
     ):
+    with pytest.raises(
+        ValueError, match="Output directory invalid_output_dir does not exist."
+    ):
         check_output_dir("invalid_output_dir")
 
     # Test with a file path instead of a directory
     temp_file_path = "temp_file.txt"
     with open(temp_file_path, "w") as f:
         f.write("temp")
+    with pytest.raises(
+        ValueError, match="Output path temp_file.txt is not a directory."
+    ):
     with pytest.raises(
         ValueError, match="Output path temp_file.txt is not a directory."
     ):
@@ -152,5 +178,6 @@ def cleanup(request):
             os.remove(mock_csv_path)
         if os.path.exists(mock_output_dir):
             os.rmdir(mock_output_dir)
+
 
     request.addfinalizer(remove_files)

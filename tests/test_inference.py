@@ -24,6 +24,9 @@ def test_check_model_and_tokenizer_path():
     assert (
         check_model_and_tokenizer_path(model_path_valid, tokenizer_path_valid) is None
     )
+    assert (
+        check_model_and_tokenizer_path(model_path_valid, tokenizer_path_valid) is None
+    )
 
     # Test invalid model path
     with pytest.raises(ValueError):
@@ -36,6 +39,9 @@ def test_check_model_and_tokenizer_path():
 
 def test_check_question_context():
     # Test valid inputs
+    check_question_context(
+        "What is the capital of France?", "Paris is the capital of France."
+    )
     check_question_context(
         "What is the capital of France?", "Paris is the capital of France."
     )
@@ -72,6 +78,7 @@ def test_get_inference(mock_tokenizer, mock_model):
     tokenizer_mock.encode_plus.return_value = {
         "input_ids": torch.tensor([[101, 102]]),
         "attention_mask": torch.tensor([[1, 1]]),
+        "attention_mask": torch.tensor([[1, 1]]),
     }
 
     # Configure the model mock to return a tensor for logits
@@ -97,8 +104,15 @@ def test_get_inference(mock_tokenizer, mock_model):
     tokenizer_mock.encode_plus.return_value = {
         "input_ids": torch.tensor([[101, 103]]),
         "attention_mask": torch.tensor([[1, 1]]),
+        "attention_mask": torch.tensor([[1, 1]]),
     }
     model_output_mock.logits = torch.tensor([[0.7, 0.3]])
+    predicted_label_id = get_inference(
+        "What is the capital of Germany?",
+        "Berlin is the capital of Germany.",
+        model_path,
+        tokenizer_path,
+    )
     predicted_label_id = get_inference(
         "What is the capital of Germany?",
         "Berlin is the capital of Germany.",
