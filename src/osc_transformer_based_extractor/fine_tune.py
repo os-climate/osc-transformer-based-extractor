@@ -21,13 +21,13 @@ Example usage:
 """
 
 import argparse
+import os
 import pandas as pd
 import torch
 from transformers import TrainingArguments, Trainer, AutoModelForSequenceClassification, AutoTokenizer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from torch.utils.data import Dataset
-import os
 
 
 def check_csv_columns(file_path):

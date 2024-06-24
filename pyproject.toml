@@ -37,9 +37,7 @@ dependencies = [
     "scikit-learn>=1.5.0",
     "accelerate>=0.31.0",
     "typer[all]>=0.12.3",
-    "poetry>=1.8.3",
     "rich>=13.7.1",
-    "tox>=4.15.1",
 ]
 
 [project.urls]
@@ -58,9 +56,7 @@ build-backend = "pdm.backend"
 license-files = ["LICENSES.txt"]
 
 [project.scripts]
-osc-transformer-based-extractor = "osc_transformer_based_extractor.cli:app"
-
-
+osc-transformer-based-extractor = "osc_transformer_based_extractor.main:app"
 
 [project.optional-dependencies]
   dev = [
@@ -87,7 +83,7 @@ complete = { call = "tasks.complete:main", help = "Create autocomplete files for
 
 
 # Define CLI commands
-osc-transformer-based-extractor = "osc_transformer_based_extractor.cli:app"
+osc-transformer-based-extractor = "osc_transformer_based_extractor.main:app"
 
 [tool.pdm.dev-dependencies]
 test = ["pdm[pytest]", "pytest-cov"]
@@ -97,7 +93,7 @@ dev = ["tox>=4.11.3", "tox-pdm>=0.7.0"]
 lint = ["pre-commit", "pyproject-flake8"]
 
 ####
-osc-transformer-based-extractor = { path = "src/osc_transformer_based_extractor" }
+osc-transformer-based-extractor = { path = "osc_transformer_based_extractor" }
 
 
 
