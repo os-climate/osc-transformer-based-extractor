@@ -3,7 +3,7 @@ name = "osc-transformer-based-extractor"
 version = "0.1.0"
 description = "OS-Climate Data Extraction Tool"
 authors = [
-    {name = "David Besslich", email = "90916810+DaBeIDS@users.noreply.github.com"},
+    {name = "Tanishq More", email = "tanishq.more@investmentdataservices.com"},
 ]
 requires-python = ">=3.9"
 readme = "README.rst"

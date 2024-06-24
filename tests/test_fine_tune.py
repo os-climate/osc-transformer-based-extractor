@@ -122,7 +122,8 @@ def test_check_output_dir():
     ):
         check_output_dir("invalid_output_dir")
 
-    # Test with a file path instead of a directory
+    # Test with a file path instead of a directox
+    # ry
     temp_file_path = "temp_file.txt"
     with open(temp_file_path, "w") as f:
         f.write("temp")
