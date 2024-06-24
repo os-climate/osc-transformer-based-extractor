@@ -63,9 +63,6 @@ def mock_args():
 def test_fine_tune_model(
     mock_trainer, mock_tokenizer, mock_model, mock_data, mock_args
 ):
-def test_fine_tune_model(
-    mock_trainer, mock_tokenizer, mock_model, mock_data, mock_args
-):
     # Mock the model and tokenizer
     model_instance = MagicMock(spec=AutoModelForSequenceClassification)
     model_instance.to = MagicMock(return_value=model_instance)
@@ -135,10 +132,6 @@ def test_check_csv_columns():
         ValueError,
         match="CSV file must contain the columns: \\['question', 'context', 'label'\\]. Missing columns: \\['label'\\]",
     ):
-    with pytest.raises(
-        ValueError,
-        match="CSV file must contain the columns: \\['question', 'context', 'label'\\]. Missing columns: \\['label'\\]",
-    ):
         check_csv_columns(invalid_csv_path)
     os.remove(invalid_csv_path)
 
@@ -151,18 +144,12 @@ def test_check_output_dir():
     with pytest.raises(
         ValueError, match="Output directory invalid_output_dir does not exist."
     ):
-    with pytest.raises(
-        ValueError, match="Output directory invalid_output_dir does not exist."
-    ):
         check_output_dir("invalid_output_dir")
 
     # Test with a file path instead of a directory
     temp_file_path = "temp_file.txt"
     with open(temp_file_path, "w") as f:
         f.write("temp")
-    with pytest.raises(
-        ValueError, match="Output path temp_file.txt is not a directory."
-    ):
     with pytest.raises(
         ValueError, match="Output path temp_file.txt is not a directory."
     ):
