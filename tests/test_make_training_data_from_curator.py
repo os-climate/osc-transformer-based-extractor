@@ -112,4 +112,3 @@ os.remove(output_path_valid, exist_ok=True)
 
 if __name__ == "__main__":
     pytest.main()
-
