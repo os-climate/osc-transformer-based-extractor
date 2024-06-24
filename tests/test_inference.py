@@ -78,7 +78,6 @@ def test_get_inference(mock_tokenizer, mock_model):
     tokenizer_mock.encode_plus.return_value = {
         "input_ids": torch.tensor([[101, 102]]),
         "attention_mask": torch.tensor([[1, 1]]),
-        "attention_mask": torch.tensor([[1, 1]]),
     }
 
     # Configure the model mock to return a tensor for logits
@@ -103,7 +102,6 @@ def test_get_inference(mock_tokenizer, mock_model):
     # Test different inputs
     tokenizer_mock.encode_plus.return_value = {
         "input_ids": torch.tensor([[101, 103]]),
-        "attention_mask": torch.tensor([[1, 1]]),
         "attention_mask": torch.tensor([[1, 1]]),
     }
     model_output_mock.logits = torch.tensor([[0.7, 0.3]])

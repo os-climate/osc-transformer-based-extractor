@@ -1,23 +1,18 @@
 from unittest.mock import patch, MagicMock
 import os
-import pytest
 import pandas as pd
 import torch
-from transformers import Trainer, AutoModelForSequenceClassification, AutoTokenizer
+import pytest
+from transformers import Trainer, AutoModelForSequenceClassification
 from osc_transformer_based_extractor.fine_tune import (
     check_csv_columns,
     check_output_dir,
     fine_tune_model,
 )
 
-# Sample data for testing
+# Sample data for testing (corrected)
 data = {
     "question": ["What is AI?", "Explain machine learning."],
-    "context": [
-        "AI is the field of study focused on creating intelligent agents.",
-        "Machine learning is a subset of AI focused on learning from data.",
-    ],
-    "label": [1, 0],
     "context": [
         "AI is the field of study focused on creating intelligent agents.",
         "Machine learning is a subset of AI focused on learning from data.",
@@ -53,7 +48,6 @@ def mock_args():
         output_dir = mock_output_dir
         save_steps = 10
 
-
     return Args()
 
 
@@ -67,22 +61,10 @@ def test_fine_tune_model(
     model_instance = MagicMock(spec=AutoModelForSequenceClassification)
     model_instance.to = MagicMock(return_value=model_instance)
 
-    # Set the attributes on the model class to mimic a PyTorch model
-    mock_model_class = MagicMock(spec=AutoModelForSequenceClassification)
-    mock_model_class.module = "torch"
-    mock_model_class.name = "PreTrainedModel"
-    mock_model_class.return_value = model_instance
-
-    mock_model.return_value = mock_model_class.return_value
-    mock_tokenizer.return_value = MagicMock(spec=AutoTokenizer)
-
     # Mock the Trainer's train, evaluate, and predict methods
     mock_trainer_instance = MagicMock(spec=Trainer)
     mock_trainer_instance.train.return_value = None
     mock_trainer_instance.evaluate.return_value = {"eval_loss": 0.5}
-    mock_trainer_instance.predict.return_value = MagicMock(
-        predictions=torch.tensor([[0.5, 0.5], [0.6, 0.4]])
-    )
     mock_trainer_instance.predict.return_value = MagicMock(
         predictions=torch.tensor([[0.5, 0.5], [0.6, 0.4]])
     )
@@ -98,19 +80,13 @@ def test_fine_tune_model(
         batch_size=mock_args.batch_size,
         output_dir=mock_args.output_dir,
         save_steps=mock_args.save_steps,
-        save_steps=mock_args.save_steps,
     )
 
-    # Assert that the model and tokenizer were loaded correctly
-    mock_model.assert_called_once_with(
-        mock_args.model_name, num_labels=mock_args.num_labels
-    )
+    # Assertions
     mock_model.assert_called_once_with(
         mock_args.model_name, num_labels=mock_args.num_labels
     )
     mock_tokenizer.assert_called_once_with(mock_args.model_name)
-
-    # Assert that the Trainer's train, evaluate, and predict methods were called
     mock_trainer_instance.train.assert_called_once()
     mock_trainer_instance.evaluate.assert_called_once()
     mock_trainer_instance.predict.assert_called_once()
@@ -165,6 +141,5 @@ def cleanup(request):
             os.remove(mock_csv_path)
         if os.path.exists(mock_output_dir):
             os.rmdir(mock_output_dir)
-
 
     request.addfinalizer(remove_files)
