@@ -1,0 +1,31 @@
+osc\_transformer\_based\_extractor namespace
+============================================
+
+.. py:module:: osc_transformer_based_extractor
+
+Submodules
+----------
+
+osc\_transformer\_based\_extractor.fine\_tune module
+----------------------------------------------------
+
+.. automodule:: osc_transformer_based_extractor.fine_tune
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+osc\_transformer\_based\_extractor.inference module
+---------------------------------------------------
+
+.. automodule:: osc_transformer_based_extractor.inference
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+osc\_transformer\_based\_extractor.make\_training\_data\_from\_curator module
+-----------------------------------------------------------------------------
+
+.. automodule:: osc_transformer_based_extractor.make_training_data_from_curator
+   :members:
+   :undoc-members:
+   :show-inheritance:

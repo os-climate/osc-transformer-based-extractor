@@ -1,0 +1,7 @@
+osc_transformer_based_extractor
+===============================
+
+.. toctree::
+   :maxdepth: 4
+
+   osc_transformer_based_extractor
