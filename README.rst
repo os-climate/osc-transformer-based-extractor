@@ -33,6 +33,7 @@ Alternatively, you can clone the repository from GitHub for a quick start:
 Training Data
 ***************
 To train the model, you need data from the curator module. The data is in CSV format. You can train the model either using the CLI or by calling the function directly in Python.
+To train the model, you need data from the curator module. The data is in CSV format. You can train the model either using the CLI or by calling the function directly in Python.
 Sample Data:
 
 .. list-table:: Company Information
@@ -79,6 +80,9 @@ The CLI command `osc-transformer-based-extractor` provides two main functions: t
 * ``fine-tune``  :  Fine-tune a pre-trained Hugging Face model on a custom dataset.
 * ``perform-inference`` :  Perform inference using a pre-trained sequence classification model.
 
+* ``fine-tune``  :  Fine-tune a pre-trained Hugging Face model on a custom dataset.
+* ``perform-inference`` :  Perform inference using a pre-trained sequence classification model.
+
 
 
 ************************
@@ -98,30 +102,42 @@ To set up the working environment for this repository, follow these steps:
     $ cd osc-transformer-based-extractor
 
 
+
 2. **Create a new virtual environment and activate it**:
 
+.. code-block:: shell
 .. code-block:: shell
 
    		$ python -m venv venv
    		$ source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 
 
+
 3. **Install PDM**:
+
+.. code-block:: shell
 
 .. code-block:: shell
 
    		$ pip install pdm
 
 
+
 4. **Sync the environment using PDM**:
+
+.. code-block:: shell
 
 .. code-block:: shell
 
    		$ pdm sync
 
 
+
 5. **Add any new library**:
 
+.. code-block:: shell
+
+   		$ pdm add <library-name>
 .. code-block:: shell
 
    		$ pdm add <library-name>
@@ -149,6 +165,7 @@ OR use function calling:
 .. code-block:: python
 
     from fine_tune import fine_tune_model
+
 
     fine_tune_model(
         data_path="data/train_data.csv",
@@ -192,11 +209,13 @@ OR use function calling:
 
   from inference import get_inference
 
+
   result = get_inference(
       question="What is the relevance?",
       context="This is a sample paragraph.",
       model_path="path/to/model",
       tokenizer_path="path/to/tokenizer" )
+
 
 **Parameters**
 
@@ -237,6 +256,7 @@ All contributions (including pull requests) must agree to the Developer Certific
 
 
 On June 26 2024, Linux Foundation announced the merger of its financial services umbrella, the Fintech Open Source Foundation ([FINOS](https://finos.org)), with OS-Climate, an open source community dedicated to building data technologies, modeling, and analytic tools that will drive global capital flows into climate change mitigation and resilience; OS-Climate projects are in the process of transitioning to the [FINOS governance framework](https://community.finos.org/docs/governance); read more on [finos.org/press/finos-join-forces-os-open-source-climate-sustainability-esg](https://finos.org/press/finos-join-forces-os-open-source-climate-sustainability-esg)
+
 
 
 
