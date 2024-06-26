@@ -32,7 +32,7 @@ Alternatively, you can clone the repository from GitHub for a quick start:
 ***************
 Training Data
 ***************
-To train the model, you need data from the curator module. The data is in CSV format. You can train the model either using the CLI or by calling the function directly in Python. 
+To train the model, you need data from the curator module. The data is in CSV format. You can train the model either using the CLI or by calling the function directly in Python.
 Sample Data:
 
 .. list-table:: Company Information
@@ -75,9 +75,9 @@ The CLI command `osc-transformer-based-extractor` provides two main functions: t
 **Commands**
 
 
- 
-* ``fine-tune``  :  Fine-tune a pre-trained Hugging Face model on a custom dataset. 
-* ``perform-inference`` :  Perform inference using a pre-trained sequence classification model. 
+
+* ``fine-tune``  :  Fine-tune a pre-trained Hugging Face model on a custom dataset.
+* ``perform-inference`` :  Perform inference using a pre-trained sequence classification model.
 
 
 
@@ -96,35 +96,35 @@ To set up the working environment for this repository, follow these steps:
 
 	$ git clone https://github.com/os-climate/osc-transformer-based-extractor/
     $ cd osc-transformer-based-extractor
-   
+
 
 2. **Create a new virtual environment and activate it**:
 
-.. code-block:: shell   
+.. code-block:: shell
 
    		$ python -m venv venv
    		$ source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-   
+
 
 3. **Install PDM**:
 
-.. code-block:: shell  
-   
+.. code-block:: shell
+
    		$ pip install pdm
-   
+
 
 4. **Sync the environment using PDM**:
 
-.. code-block:: shell  
-   
+.. code-block:: shell
+
    		$ pdm sync
-   
+
 
 5. **Add any new library**:
 
-.. code-block:: shell  
-   
-   		$ pdm add <library-name>  
+.. code-block:: shell
+
+   		$ pdm add <library-name>
 
 
 Train the model
@@ -149,7 +149,7 @@ OR use function calling:
 .. code-block:: python
 
     from fine_tune import fine_tune_model
-    
+
     fine_tune_model(
         data_path="data/train_data.csv",
         model_name="sentence-transformers/all-MiniLM-L6-v2",
@@ -191,13 +191,13 @@ OR use function calling:
 .. code-block:: python
 
   from inference import get_inference
-    
+
   result = get_inference(
       question="What is the relevance?",
       context="This is a sample paragraph.",
       model_path="path/to/model",
       tokenizer_path="path/to/tokenizer" )
-    
+
 **Parameters**
 
 * ``question (str)`` : The question for inference.
@@ -236,21 +236,14 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 All contributions (including pull requests) must agree to the Developer Certificate of Origin (DCO) version 1.1. This is exactly the same one created and used by the Linux kernel developers and posted on http://developercertificate.org/. This is a developer's certification that he or she has the right to submit the patch for inclusion into the project. Simply submitting a contribution implies this agreement, however, please include a "Signed-off-by" tag in every patch (this tag is a conventional way to confirm that you agree to the DCO).
 
 
+On June 26 2024, Linux Foundation announced the merger of its financial services umbrella, the Fintech Open Source Foundation ([FINOS](https://finos.org)), with OS-Climate, an open source community dedicated to building data technologies, modeling, and analytic tools that will drive global capital flows into climate change mitigation and resilience; OS-Climate projects are in the process of transitioning to the [FINOS governance framework](https://community.finos.org/docs/governance); read more on [finos.org/press/finos-join-forces-os-open-source-climate-sustainability-esg](https://finos.org/press/finos-join-forces-os-open-source-climate-sustainability-esg)
 
 
-   
+
 
 
 
 .. |osc-climate-project| image:: https://img.shields.io/badge/OS-Climate-blue
-=======
-[IMPORTANT]
-
-On June 26 2024, Linux Foundation announced the merger of its financial services umbrella, the Fintech Open Source Foundation ([FINOS](https://finos.org)), with OS-Climate, an open source community dedicated to building data technologies, modeling, and analytic tools that will drive global capital flows into climate change mitigation and resilience; OS-Climate projects are in the process of transitioning to the [FINOS governance framework](https://community.finos.org/docs/governance); read more on [finos.org/press/finos-join-forces-os-open-source-climate-sustainability-esg](https://finos.org/press/finos-join-forces-os-open-source-climate-sustainability-esg)
-
-
-.. image:: https://img.shields.io/badge/OS-Climate-blue
-
   :alt: An OS-Climate Project
   :target: https://os-climate.org/
 
