@@ -2,7 +2,7 @@ import os
 import pytest
 import torch
 from unittest.mock import patch, MagicMock
-from osc_transformer_based_extractor.inference import (
+from src.osc_transformer_based_extractor.inference import (
     check_model_and_tokenizer_path,
     get_inference,
     check_question_context,
@@ -51,22 +51,22 @@ def test_check_question_context():
         check_question_context(123, "Paris is the capital of France.")
 
     # Test invalid context type
-    with pytest.raises(ValueError, match="context must be a string."):
+    with pytest.raises(ValueError, match="Context must be a string."):
         check_question_context("What is the capital of France?", 123)
 
     # Test empty question
-    with pytest.raises(ValueError, match="Question is Emtpy"):
+    with pytest.raises(ValueError, match="Question is Emtpy."):
         check_question_context("", "Paris is the capital of France.")
 
     # Test empty context
-    with pytest.raises(ValueError, match="context is Emtpy"):
+    with pytest.raises(ValueError, match="Context is Emtpy."):
         check_question_context("What is the capital of France?", "")
 
 
 @patch(
     "src.osc_transformer_based_extractor.inference.AutoModelForSequenceClassification.from_pretrained"
 )
-@patch("src. osc_transformer_based_extractor.inference.AutoTokenizer.from_pretrained")
+@patch("src.osc_transformer_based_extractor.inference.AutoTokenizer.from_pretrained")
 def test_get_inference(mock_tokenizer, mock_model):
     # Mock tokenizer and model
     tokenizer_mock = MagicMock()
