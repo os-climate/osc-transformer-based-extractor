@@ -106,7 +106,6 @@ To set up the working environment for this repository, follow these steps:
 2. **Create a new virtual environment and activate it**:
 
 .. code-block:: shell
-.. code-block:: shell
 
    		$ python -m venv venv
    		$ source venv/bin/activate  # On Windows use `venv\Scripts\activate`
@@ -114,8 +113,6 @@ To set up the working environment for this repository, follow these steps:
 
 
 3. **Install PDM**:
-
-.. code-block:: shell
 
 .. code-block:: shell
 
@@ -127,17 +124,12 @@ To set up the working environment for this repository, follow these steps:
 
 .. code-block:: shell
 
-.. code-block:: shell
-
    		$ pdm sync
 
 
 
 5. **Add any new library**:
 
-.. code-block:: shell
-
-   		$ pdm add <library-name>
 .. code-block:: shell
 
    		$ pdm add <library-name>
