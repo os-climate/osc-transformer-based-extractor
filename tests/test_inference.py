@@ -55,11 +55,11 @@ def test_check_question_context():
         check_question_context("What is the capital of France?", 123)
 
     # Test empty question
-    with pytest.raises(ValueError, match="Question is Emtpy."):
+    with pytest.raises(ValueError, match="Question is emtpy."):
         check_question_context("", "Paris is the capital of France.")
 
     # Test empty context
-    with pytest.raises(ValueError, match="Context is Emtpy."):
+    with pytest.raises(ValueError, match="Context is emtpy."):
         check_question_context("What is the capital of France?", "")
 
 
