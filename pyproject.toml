@@ -59,7 +59,7 @@ license-files = ["LICENSES.txt"]
 osc-transformer-based-extractor = "osc_transformer_based_extractor.main:app"
 
 [project.optional-dependencies]
-  dev = [
+dev = [
   "pylint",
   "toml",
   "yapf",

@@ -1,38 +1,8 @@
-
-.. image:: https://img.shields.io/badge/OS-Climate-blue
-  :alt: An OS-Climate Project
-  :target: https://os-climate.org/
-
-.. image:: https://img.shields.io/badge/slack-osclimate-brightgreen.svg?logo=slack
-  :alt: Join OS-Climate on Slack
-  :target: https://os-climate.slack.com
-
-.. image:: https://img.shields.io/badge/GitHub-100000?logo=github&logoColor=white
-  :alt: Source code on GitHub
-  :target: https://github.com/ModeSevenIndustrialSolutions/osc-transformer-based-extractor
-
-.. image:: https://img.shields.io/pypi/v/osc-transformer-based-extractor.svg
-  :alt: PyPI package
-  :target: https://pypi.org/project/osc-transformer-based-extractor/
-
-.. image:: https://api.cirrus-ci.com/github/os-climate/osc-transformer-based-extractor.svg?branch=main
-  :alt: Built Status
-  :target: https://cirrus-ci.com/github/os-climate/osc-transformer-based-extractor
-
-.. image:: https://img.shields.io/badge/PDM-Project-purple
-  :alt: Built using PDM
-  :target: https://pdm-project.org/latest/
-
-.. image:: https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold
-  :alt: Project generated with PyScaffold
-  :target: https://pyscaffold.org/
-
-
-
 ===============================
-osc-transformer-based-extractor
+OSC Transformer Based Extractor
 ===============================
 
+|osc-climate-project| |osc-climate-slack| |osc-climate-github| |pypi| |build-status| |pdm| |PyScaffold|
 
 
 This folder contains a set of scripts and notebooks designed to process data, train a sentence transformer model, and perform inferences to detect the relevance of folder contents. Below is a detailed description of each file and folder included in this repository.
@@ -60,14 +30,14 @@ This folder contains a set of scripts and notebooks designed to process data, tr
      ```python
      from train_sentence_transformer import fine_tune_model
      fine_tune_model(
-       data_path="data/train_data.csv",
-       model_name="sentence-transformers/all-MiniLM-L6-v2",
-       num_labels=2,
-       max_length=512,
-       epochs=2,
-       batch_size=4,
-       output_dir="./saved_models_during_training",
-       save_steps=500
+      data_path="data/train_data.csv",
+      model_name="sentence-transformers/all-MiniLM-L6-v2",
+      num_labels=2,
+      max_length=512,
+      epochs=2,
+      batch_size=4,
+      output_dir="./saved_models_during_training",
+      save_steps=500
      )
      ```
 
@@ -247,3 +217,34 @@ All contributions (including pull requests) must agree to the Developer Certific
 For further details and documentation, please refer to the individual scripts and notebooks provided in this repository.
 
 ---
+
+
+
+
+.. |osc-climate-project| image:: https://img.shields.io/badge/OS-Climate-blue
+  :alt: An OS-Climate Project
+  :target: https://os-climate.org/
+
+.. |osc-climate-slack| image:: https://img.shields.io/badge/slack-osclimate-brightgreen.svg?logo=slack
+  :alt: Join OS-Climate on Slack
+  :target: https://os-climate.slack.com
+
+.. |osc-climate-github| image:: https://img.shields.io/badge/GitHub-100000?logo=github&logoColor=white
+  :alt: Source code on GitHub
+  :target: https://github.com/ModeSevenIndustrialSolutions/osc-data-extractor
+
+.. |pypi| image:: https://img.shields.io/pypi/v/osc-data-extractor.svg
+  :alt: PyPI package
+  :target: https://pypi.org/project/osc-data-extractor/
+
+.. |build-status| image:: https://api.cirrus-ci.com/github/os-climate/osc-data-extractor.svg?branch=main
+  :alt: Built Status
+  :target: https://cirrus-ci.com/github/os-climate/osc-data-extractor
+
+.. |pdm| image:: https://img.shields.io/badge/PDM-Project-purple
+  :alt: Built using PDM
+  :target: https://pdm-project.org/latest/
+
+.. |PyScaffold| image:: https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold
+  :alt: Project generated with PyScaffold
+  :target: https://pyscaffold.org/
