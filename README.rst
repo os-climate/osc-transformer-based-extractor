@@ -9,8 +9,8 @@ OS-Climate Data Extraction Tool
 
 .. _notes:
 
-This code provides you with an api with which you can train a huggingface Transformer model 
-or local Transformer model and perform inference with it. The inference is to find out 
+This code provides you with an api with which you can train a huggingface Transformer model
+or local Transformer model and perform inference with it. The inference is to find out
 the relevance between the question and context
 
 Quick start
