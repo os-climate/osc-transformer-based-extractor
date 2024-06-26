@@ -1,68 +1,215 @@
-=====================================================================
+#############################################
 OSC Transformer Based Extractor
-=====================================================================
+#############################################
 
 |osc-climate-project| |osc-climate-slack| |osc-climate-github| |pypi| |build-status| |pdm| |PyScaffold|
 
+
+
+***********************************
 OS-Climate Data Extraction Tool
-===============================
+***********************************
 
-.. _notes:
 
-This code provides you with an api with which you can train a huggingface Transformer model 
-or local Transformer model and perform inference with it. The inference is to find out 
-the relevance between the question and context
+This project provides an CLI tool and python scripts to train a HuggingFace Transformer model or a local Transformer model and perform inference with it. The primary goal of the inference is to determine the relevance between a given question and context.
 
-Quick start
-===========
+Installation
+^^^^^^^^^^^^^
 
-Install via PyPi
-----------------
+To install the OSC Transformer Based Extractor CLI, use pip:
 
-You can simply install the package via::
+.. code-block:: shell
 
     $ pip install osc-transformer-based-extractor
 
-Afterwards you can use the tooling as a CLI tool by simply typing::
+Alternatively, you can clone the repository from GitHub for a quick start:
 
-    $ osc-transformer-based-extractor
-
-We are using typer to have a nice CLI tool here. All details and help will be shown in the CLI
-tool itself and are not described here in more detail.
-
-
-Install via Github Repository
------------------------------
-
-For a quick start with the tool install python and clone the repository to your local environment::
+.. code-block:: shell
 
     $ git clone https://github.com/os-climate/osc-transformer-based-extractor/
 
-Afterwards update your python to the requirements (possible for example
-via pdm update) and start a local api server via::
 
-    $ python ./src/run_server.py
+***************
+Training Data
+***************
+To train the model, you need data from the curator module. The data is in CSV format. You can train the model either using the CLI or by calling the function directly in Python. 
+Sample Data:
 
-**Note**:
-    * We assume that you are located in the cloned repository.
-    * To check if it is running open "http://localhost:8000/liveness" and you should see the
-      message {"message": "OSC Transformer Pre-Steps Server is running."}.
+.. list-table:: Company Information
+   :header-rows: 1
 
-Finally, run the following code to start a streamlit app which opens up the possibility
-to "upload" a file and extract data from pdf to json via this UI. Note that the UI needs
-the running server so you have to open the streamlit and the server in two different
-terminals.::
+   * - Question
+     - Context
+     - Label
+     - Company
+     - Source File
+     - Source Page
+     - KPI ID
+     - Year
+     - Answer
+     - Data Type
+     - Annotator
+     - Index
+   * - What is the company name?
+     - The Company is exposed to a risk of by losses counterparties their contractual financial obligations when due, and in particular depends on the reliability of banks the Company deposits its available cash.
+     - 0
+     - NOVATEK
+     - 04_NOVATEK_AR_2016_ENG_11.pdf
+     - ['0']
+     - 0
+     - 2016
+     - PAO NOVATEK
+     - TEXT
+     - train_anno_large.xlsx
+     - 1022
 
-    $ streamlit run ./src/osc_transformer_presteps/streamlit/app.py
 
-**Note**: Check also docs/demo. There you can
-find local_extraction_demo.py which will start an extraction
-without any API call and then there is post_request_demo.py
-which will send a file to the API (of course you have to start
-server as above first).
 
+
+***************
+CLI Usage
+***************
+
+The CLI command `osc-transformer-based-extractor` provides two main functions: training and inference. You can access detailed information about these functions by running the CLI command without any arguments.
+
+**Commands**
+
+
+ 
+* ``fine-tune``  :  Fine-tune a pre-trained Hugging Face model on a custom dataset. 
+* ``perform-inference`` :  Perform inference using a pre-trained sequence classification model. 
+
+
+
+************************
+Using Github Repository
+************************
+
+Setting Up the Environment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To set up the working environment for this repository, follow these steps:
+
+1. **Clone the repository**:
+
+.. code-block:: shell
+
+	$ git clone https://github.com/os-climate/osc-transformer-based-extractor/
+    $ cd osc-transformer-based-extractor
+   
+
+2. **Create a new virtual environment and activate it**:
+
+.. code-block:: shell   
+
+   		$ python -m venv venv
+   		$ source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   
+
+3. **Install PDM**:
+
+.. code-block:: shell  
+   
+   		$ pip install pdm
+   
+
+4. **Sync the environment using PDM**:
+
+.. code-block:: shell  
+   
+   		$ pdm sync
+   
+
+5. **Add any new library**:
+
+.. code-block:: shell  
+   
+   		$ pdm add <library-name>  
+
+
+Train the model
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To train the model, you can use the following code snippet:
+
+.. code-block:: shell
+
+    $ python fine_tune.py \
+      --data_path "data/train_data.csv" \
+      --model_name "sentence-transformers/all-MiniLM-L6-v2" \
+      --num_labels 2 \
+      --max_length 512 \
+      --epochs 2 \
+      --batch_size 4 \
+      --output_dir "./saved_models_during_training" \
+      --save_steps 500
+
+OR use function calling:
+
+.. code-block:: python
+
+    from fine_tune import fine_tune_model
+    
+    fine_tune_model(
+        data_path="data/train_data.csv",
+        model_name="sentence-transformers/all-MiniLM-L6-v2",
+        num_labels=2,
+        max_length=512,
+        epochs=2,
+        batch_size=4,
+        output_dir="./saved_models_during_training",
+        save_steps=500
+    )
+
+**Parameters**
+
+* ``data_path (str)`` : Path to the training data CSV file.
+* ``model_name (str)`` : Pre-trained model name from HuggingFace.
+* ``num_labels (int)`` : Number of labels for the classification task.
+* ``max_length (int)`` : Maximum sequence length.
+* ``epochs (int)`` : Number of training epochs.
+* ``batch_size (int)`` : Batch size for training.
+* ``output_dir (str)`` : Directory to save the trained models.
+* ``save_steps (int)`` : Number of steps between saving checkpoints.
+
+
+Performing Inference
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To perform inference and determine the relevance between a question and context, use the following code snippet:
+
+.. code-block:: python
+
+  $ python inference.py
+      --question "What is the capital of France?"
+      --context "Paris is the capital of France."
+      --model_path /path/to/model
+      --tokenizer_path /path/to/tokenizer
+
+OR use function calling:
+
+.. code-block:: python
+
+  from inference import get_inference
+    
+  result = get_inference(
+      question="What is the relevance?",
+      context="This is a sample paragraph.",
+      model_path="path/to/model",
+      tokenizer_path="path/to/tokenizer" )
+    
+**Parameters**
+
+* ``question (str)`` : The question for inference.
+* ``context (str)`` : The paragraph to be analyzed.
+* ``model_path (str)`` : Path to the pre-trained model.
+* ``tokenizer_path (str)`` : Path to the tokenizer of the pre-trained model.
+
+
+
+************************
 Developer Notes
-===============
+************************
 
 For adding new dependencies use pdm. First install via pip::
 
@@ -77,6 +224,22 @@ For running linting tools just to the following::
     $ pip install tox
     $ tox -e lint
     $ tox -e test
+
+
+
+************************
+Contributing
+************************
+
+Contributions are welcome! Please fork the repository and submit a pull request for any enhancements or bug fixes.
+
+All contributions (including pull requests) must agree to the Developer Certificate of Origin (DCO) version 1.1. This is exactly the same one created and used by the Linux kernel developers and posted on http://developercertificate.org/. This is a developer's certification that he or she has the right to submit the patch for inclusion into the project. Simply submitting a contribution implies this agreement, however, please include a "Signed-off-by" tag in every patch (this tag is a conventional way to confirm that you agree to the DCO).
+
+
+
+
+   
+
 
 
 .. |osc-climate-project| image:: https://img.shields.io/badge/OS-Climate-blue
