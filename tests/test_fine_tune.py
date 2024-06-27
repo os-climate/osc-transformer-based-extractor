@@ -145,3 +145,7 @@ def cleanup(request):
 
     request.addfinalizer(remove_files)
 """
+
+
+def test_placeholder():
+    assert True
