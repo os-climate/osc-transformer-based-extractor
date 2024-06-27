@@ -28,6 +28,16 @@ def check_model_and_tokenizer_path(model_path, tokenizer_path):
 
 
 def check_question_context(question, context):
+    """
+    Check if the question and context are valid strings and not empty.
+
+    Args:
+        question (str): The question string.
+        context (str): The context string.
+
+    Raises:
+        ValueError: If the question or context is not a string or is empty.
+    """
     if not isinstance(question, str):
         raise ValueError("Question must be a string.")
 
@@ -90,7 +100,6 @@ if __name__ == "__main__":
     )
 
     print(f"Predicted Label ID: {result}")
-
 
 
 '''python inference.py
