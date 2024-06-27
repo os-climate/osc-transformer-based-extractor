@@ -6,7 +6,7 @@ source = osc_transformer_based_extractor
 
 [paths]
 source =
-    src/
+    src/osc_transformer_based_extractor
     */site-packages/
 
 [report]
