@@ -1,5 +1,3 @@
----
-
 # Relevance Detector
 
 This folder contains a set of scripts and notebooks designed to process data, train a sentence transformer model, and perform inferences to detect the relevance of folder contents. Below is a detailed description of each file and folder included in this repository.
