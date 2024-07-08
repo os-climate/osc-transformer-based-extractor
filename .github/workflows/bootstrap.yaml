@@ -214,6 +214,7 @@ jobs:
           else
             # The -B flag swaps branch and creates it if NOT present
             git checkout -B "$AUTOMATION_BRANCH"
+            git pull
           fi
 
           # Only if NOT running in GitHub
