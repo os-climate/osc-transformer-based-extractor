@@ -78,32 +78,3 @@ def get_inference(question: str, context: str, model_path: str, tokenizer_path: 
     predicted_label_id = torch.argmax(outputs.logits, dim=1).item()
 
     return predicted_label_id
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Perform inference using a pre-trained sequence classification model. (local or hugging face)")
-    parser.add_argument("--question", type=str, required=True, help="The question for inference.")
-    parser.add_argument("--context", type=str, required=True, help="The context to be analyzed.")
-    parser.add_argument("--model_path", type=str, required=True, help="Path to the pre-trained model. (local or hugging face)")
-    parser.add_argument("--tokenizer_path", type=str, required=True, help="Path to the tokenizer to the pre-trained model. (local or hugging face)")
-
-    args = parser.parse_args()
-
-    check_model_and_tokenizer_path(args.model_path, args.tokenizer_path)
-    check_question_context(args.question, args.context)
-
-    result = get_inference(
-        question=args.question,
-        context=args.context,
-        model_path=args.model_path,
-        tokenizer_path=args.tokenizer_path
-    )
-
-    print(f"Predicted Label ID: {result}")
-
-
-'''python inference.py
-    --question "What is the capital of France?"
-    --context "Paris is the capital of France."
-    --model_path /path/to/model
-    --tokenizer_path /path/to/tokenizer'''

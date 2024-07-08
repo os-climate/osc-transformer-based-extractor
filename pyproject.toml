@@ -26,7 +26,7 @@ classifiers = [
   "Topic :: Software Development",
 ]
 dependencies = [
-    "torch>=2.2.2",
+    "torch>=2.3.1",
     "pandas>=2.2.2",
     "tokenizers>=0.19.1",
     "ipykernel>=6.29.4",
@@ -38,6 +38,7 @@ dependencies = [
     "accelerate>=0.31.0",
     "typer[all]>=0.12.3",
     "rich>=13.7.1",
+    "numpy>=2.0.0",
 ]
 
 [project.urls]
@@ -67,7 +68,7 @@ dev = [
 ]
 test = [
   "pytest",
-  "pytest-cov",
+  "pytest-cov"
 ]
 
 [tool.setuptools_scm]

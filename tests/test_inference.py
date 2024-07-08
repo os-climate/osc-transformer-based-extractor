@@ -2,7 +2,7 @@ import os
 import pytest
 import torch
 from unittest.mock import patch, MagicMock
-from src.osc_transformer_based_extractor.inference import (
+from osc_transformer_based_extractor.inference import (
     check_model_and_tokenizer_path,
     get_inference,
     check_question_context,
@@ -64,9 +64,9 @@ def test_check_question_context():
 
 
 @patch(
-    "src.osc_transformer_based_extractor.inference.AutoModelForSequenceClassification.from_pretrained"
+    "osc_transformer_based_extractor.inference.AutoModelForSequenceClassification.from_pretrained"
 )
-@patch("src.osc_transformer_based_extractor.inference.AutoTokenizer.from_pretrained")
+@patch("osc_transformer_based_extractor.inference.AutoTokenizer.from_pretrained")
 def test_get_inference(mock_tokenizer, mock_model):
     # Mock tokenizer and model
     tokenizer_mock = MagicMock()
@@ -118,7 +118,3 @@ def test_get_inference(mock_tokenizer, mock_model):
         tokenizer_path,
     )
     assert isinstance(predicted_label_id, int)
-
-
-if __name__ == "__main__":
-    pytest.main()

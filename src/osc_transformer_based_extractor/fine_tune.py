@@ -7,17 +7,6 @@ This script performs the following steps:
 3. Fine-tunes a pre-trained Hugging Face transformer model on the dataset.
 4. Evaluates the model and prints evaluation results and accuracy.
 5. Saves the fine-tuned model and tokenizer.
-
-Example usage:
-    python fine_tune.py \
-      --data_path "data/train_data.csv" \
-      --model_name "sentence-transformers/all-MiniLM-L6-v2" \
-      --num_labels 2 \
-      --max_length 512 \
-      --epochs 2 \
-      --batch_size 4 \
-      --output_dir "./saved_models_during_training" \
-      --save_steps 500
 """
 
 import argparse
@@ -214,33 +203,3 @@ def fine_tune_model(data_path, model_name, num_labels, max_length, epochs, batch
     # Save the model and tokenizer
     model.save_pretrained(output_dir)
     tokenizer.save_pretrained(output_dir)
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Fine-tune a Hugging Face model on a custom dataset.")
-    parser.add_argument("--data_path", type=str, required=True, help="Path to the CSV file containing the dataset.")
-    parser.add_argument("--model_name", type=str, required=True, help="Name/ path of the pre-trained model to use (local or Hugging Face).")
-    parser.add_argument("--num_labels", type=int, required=True, help="Number of labels for the classification task.")
-    parser.add_argument("--max_length", type=int, required=True, help="Maximum length of the input sequences.")
-    parser.add_argument("--epochs", type=int, required=True, help="Number of training epochs.")
-    parser.add_argument("--batch_size", type=int, required=True, help="Batch size for training.")
-    parser.add_argument("--output_dir", type=str, required=True, help="Directory where the model will be saved during training.")
-    parser.add_argument("--save_steps", type=int, required=True, help="Number of steps before saving the model during training.")
-
-    args = parser.parse_args()
-
-    check_csv_columns(args.data_path)
-    check_output_dir(args.output_dir)
-
-    fine_tune_model(
-        data_path=args.data_path,
-        model_name=args.model_name,
-        num_labels=args.num_labels,
-        max_length=args.max_length,
-        epochs=args.epochs,
-        batch_size=args.batch_size,
-        output_dir=args.output_dir,
-        save_steps=args.save_steps
-    )
-
-    print(f"Model '{args.model_name}' trained and saved successfully at '{args.output_dir}'")
