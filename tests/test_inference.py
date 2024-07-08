@@ -7,6 +7,11 @@ from osc_transformer_based_extractor.inference import (
     get_inference,
     check_question_context,
 )
+import sys
+from unittest.mock import patch, MagicMock
+import torch
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 # Define test data paths
 model_path_valid = "valid_model"
