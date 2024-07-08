@@ -13,6 +13,7 @@ class MockTrainer:
     def evaluate(self, dataset):
         return {"eval_loss": 0.1, "eval_accuracy": 0.95}
 
+
 @pytest.fixture
 def mock_trainer():
     return MockTrainer()

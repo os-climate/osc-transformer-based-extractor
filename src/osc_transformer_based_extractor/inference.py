@@ -92,7 +92,6 @@ if __name__ == "__main__":
     print(f"Predicted Label ID: {result}")
 
 
-
 '''python inference.py
     --question "What is the capital of France?"
     --context "Paris is the capital of France."

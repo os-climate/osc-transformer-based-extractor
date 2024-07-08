@@ -4,72 +4,73 @@ This folder contains a set of scripts and notebooks designed to process data, tr
 
 ## How to Use This Repository
 
-1. **Prepare Training Data**:
+**Prepare Training Data**:
 
-   - One must have data from the curator module, which is used for training of the model. The data from the curator module is a CSV file as follows:
+- One must have data from the curator module, which is used for training of the model. The data from the curator module is a CSV file as follows:
 
 ### Example Snippet
 
-   | question                  | context                                                                                                                                                                                                       | company | source_file                   | source_page | kpi_id | year | answer      | data_type | relevant_paragraphs                | annotator             | Index | label |
-   | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ----------------------------- | ----------- | ------ | ---- | ----------- | --------- | ---------------------------------- | --------------------- | ----- | ----- |
-   | What is the company name? | The Company is exposed to a risk of by losses counterparties their contractual financial obligations when due, and in particular depends on the reliability of banks the Company deposits its available cash. | NOVATEK | 04_NOVATEK_AR_2016_ENG_11.pdf | ['0']       | 0      | 2016 | PAO NOVATEK | TEXT      | ["PAO NOVATEK ANNUAL REPORT 2016"] | train_anno_large.xlsx | 1022  | 0     |
+| question                  | context                                                                                                                                                                                                       | company | source_file                   | source_page | kpi_id | year | answer      | data_type | relevant_paragraphs                | annotator             | Index | label |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ----------------------------- | ----------- | ------ | ---- | ----------- | --------- | ---------------------------------- | --------------------- | ----- | ----- |
+| What is the company name? | The Company is exposed to a risk of by losses counterparties their contractual financial obligations when due, and in particular depends on the reliability of banks the Company deposits its available cash. | NOVATEK | 04_NOVATEK_AR_2016_ENG_11.pdf | ['0']       | 0      | 2016 | PAO NOVATEK | TEXT      | ["PAO NOVATEK ANNUAL REPORT 2016"] | train_anno_large.xlsx | 1022  | 0     |
 
-   - If you have CSV data from the curator module, run `make_training_data_from_curator.py` to process and save it in the `Data` folder.
-   - Alternatively, you can use `make_sample_training_data.ipynb` to generate sample data from a sample CSV file.
+- If you have CSV data from the curator module, run `make_training_data_from_curator.py` to process and save it in the `Data` folder.
+- Alternatively, you can use `make_sample_training_data.ipynb` to generate sample data from a sample CSV file.
 
-2. **Train the Model**:
+**Train the Model**:
 
-   - Use `train_sentence_transformer.ipynb` or `train_sentence_transformer.py` to train a sentence transformer model with the processed data from the `Data` folder and save it locally. Follow the steps in the notebook or script to configure and start the training process.
+- Use `train_sentence_transformer.ipynb` or `train_sentence_transformer.py` to train a sentence transformer model with the processed data from the `Data` folder and save it locally. Follow the steps in the notebook or script to configure and start the training process.
 
-   - To train the model using function calling
+- To train the model using function calling
 
-     ```python
-     from train_sentence_transformer import fine_tune_model
-     fine_tune_model(
-        data_path="data/train_data.csv",
-        model_name="sentence-transformers/all-MiniLM-L6-v2",
-        num_labels=2,
-        max_length=512,
-        epochs=2,
-        batch_size=4,
-        output_dir="./saved_models_during_training",
-        save_steps=500
-     )
-     ```
+  ```python
+  from train_sentence_transformer import fine_tune_model
+  fine_tune_model(
+     data_path="data/train_data.csv",
+     model_name="sentence-transformers/all-MiniLM-L6-v2",
+     num_labels=2,
+     max_length=512,
+     epochs=2,
+     batch_size=4,
+     output_dir="./saved_models_during_training",
+     save_steps=500
+  )
+  ```
 
-     **Parameters**:
+  **Parameters**:
 
-     - `data_path (str)`: Path to the training data CSV file.
-     - `model_name (str)`: Pre-trained model name from HuggingFace.
-     - `num_labels (int)`: Number of labels for the classification task.
-     - `max_length (int)`: Maximum sequence length.
-     - `epochs (int)`: Number of training epochs.
-     - `batch_size (int)`: Batch size for training.
-     - `output_dir (str)`: Directory to save the trained models.
-     - `save_steps (int)`: Number of steps between saving checkpoints.
+  - `data_path (str)`: Path to the training data CSV file.
+  - `model_name (str)`: Pre-trained model name from HuggingFace.
+  - `num_labels (int)`: Number of labels for the classification task.
+  - `max_length (int)`: Maximum sequence length.
+  - `epochs (int)`: Number of training epochs.
+  - `batch_size (int)`: Batch size for training.
+  - `output_dir (str)`: Directory to save the trained models.
+  - `save_steps (int)`: Number of steps between saving checkpoints.
 
-   - To train the model from the command line, run `fine_tune.py` with the required arguments:
+- To train the model from the command line, run `fine_tune.py` with the required arguments:
 
-     ```bash
-     python fine_tune.py \
-       --data_path "data/train_data.csv" \
-       --model_name "sentence-transformers/all-MiniLM-L6-v2" \
-       --num_labels 2 \
-       --max_length 512 \
-       --epochs 2 \
-       --batch_size 4 \
-       --output_dir "./saved_models_during_training" \
-       --save_steps 500
-     ```
+  ```bash
+  python fine_tune.py \
+    --data_path "data/train_data.csv" \
+    --model_name "sentence-transformers/all-MiniLM-L6-v2" \
+    --num_labels 2 \
+    --max_length 512 \
+    --epochs 2 \
+    --batch_size 4 \
+    --output_dir "./saved_models_during_training" \
+    --save_steps 500
+  ```
 
-3. **Perform Inference**:
-   - Use `inference_demo.ipynb` to perform inferences with your trained model. Specify the model and tokenizer paths (either local or from HuggingFace) and run the notebook cells to see the results.
-   - For programmatic inference, you can use the function provided in `inference.py`:
+**Perform Inference**:
 
-     ```python
-     from inference import get_inference
-     result = get_inference(question="What is the relevance?", paragraph="This is a sample paragraph.", model_path="path/to/model", tokenizer_path="path/to/tokenizer")
-     ```
+- Use `inference_demo.ipynb` to perform inferences with your trained model. Specify the model and tokenizer paths (either local or from HuggingFace) and run the notebook cells to see the results.
+- For programmatic inference, you can use the function provided in `inference.py`:
+
+  ```python
+  from inference import get_inference
+  result = get_inference(question="What is the relevance?", paragraph="This is a sample paragraph.", model_path="path/to/model", tokenizer_path="path/to/tokenizer")
+  ```
 
 ## Repository Contents
 
@@ -87,6 +88,7 @@ This folder contains a set of scripts and notebooks designed to process data, tr
      ```
 
      **Parameters**:
+
      - `question (str)`: The question for inference.
      - `paragraph (str)`: The paragraph to be analyzed.
      - `model_path (str)`: Path to the pre-trained model.
@@ -118,6 +120,7 @@ This folder contains a set of scripts and notebooks designed to process data, tr
      ```
 
      **Parameters**:
+
      - `data_path (str)`: Path to the training data CSV file.
      - `model_name (str)`: Pre-trained model name from HuggingFace.
      - `num_labels (int)`: Number of labels for the classification task.
@@ -128,6 +131,7 @@ This folder contains a set of scripts and notebooks designed to process data, tr
      - `save_steps (int)`: Number of steps between saving checkpoints.
 
 4. **`fine_tune.py`**
+
    - This script allows you to train a sentence transformer model from the command line.
    - **Usage**: Run this script from the command line with the necessary arguments.
    - **Example**:
