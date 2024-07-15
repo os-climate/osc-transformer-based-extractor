@@ -6,46 +6,52 @@ import pandas as pd
 
 
 def check_curator_data_path(data_path):
-    """
-    Check if curator data path exists and is a CSV file.
+    """Check if curator data path exists and is a CSV file.
 
     Args:
+    ----
         data_path (str): Path to the curator data file.
 
     Raises:
+    ------
         ValueError: If the path does not exist or is not a CSV file.
+
     """
     if not os.path.exists(data_path):
         raise ValueError("Curator data path does not exist.")
-    if not data_path.lower().endswith('.csv'):
+    if not data_path.lower().endswith(".csv"):
         raise ValueError("Curator data path is not a CSV file.")
 
 
 def check_kpi_mapping_path(data_path):
-    """
-    Check if KPI mapping path exists and is a CSV file.
+    """Check if KPI mapping path exists and is a CSV file.
 
     Args:
+    ----
         data_path (str): Path to the KPI mapping file.
 
     Raises:
+    ------
         ValueError: If the path does not exist or is not a CSV file.
+
     """
     if not os.path.exists(data_path):
         raise ValueError("KPI mapping path does not exist.")
-    if not data_path.lower().endswith('.csv'):
+    if not data_path.lower().endswith(".csv"):
         raise ValueError("KPI mapping path is not a CSV file.")
 
 
 def check_output_path(output_path):
-    """
-    Check if the output path exists, if not create it.
+    """Check if the output path exists, if not create it.
 
     Args:
+    ----
         output_path (str): Path to the output directory.
 
     Raises:
+    ------
         ValueError: If the path is not a directory.
+
     """
     if not os.path.exists(output_path):
         raise ValueError("Output path does not exist.")
@@ -54,17 +60,21 @@ def check_output_path(output_path):
         raise ValueError("Output path is not a directory.")
 
 
-def make_training_data(curator_data_path: str, kpi_mapping_path: str, output_path: str) -> None:
-    """
-    Generate training data based on curator data and KPI mapping.
+def make_training_data(
+    curator_data_path: str, kpi_mapping_path: str, output_path: str
+) -> None:
+    """Generate training data based on curator data and KPI mapping.
 
     Args:
+    ----
         curator_data_path (str): Path to the curator data CSV file.
         kpi_mapping_path (str): Path to the KPI mapping CSV file.
         output_path (str): Path to the output directory.
 
     Returns:
+    -------
         None
+
     """
     data = pd.read_csv(curator_data_path)
 
@@ -118,10 +128,24 @@ def make_training_data(curator_data_path: str, kpi_mapping_path: str, output_pat
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Make Training Data for training the model using the output from the Curator module.")
-    parser.add_argument("--curator_data_path", type=str, required=True, help="Path to the CSV file from the Curator Module.")
-    parser.add_argument("--kpi_mapping_path", type=str, required=True, help="Path to the kpi_mapping CSV file.")
-    parser.add_argument("--output_path", type=str, required=True, help="Path to the output directory.")
+    parser = argparse.ArgumentParser(
+        description="Make Training Data for training the model using the output from the Curator module."
+    )
+    parser.add_argument(
+        "--curator_data_path",
+        type=str,
+        required=True,
+        help="Path to the CSV file from the Curator Module.",
+    )
+    parser.add_argument(
+        "--kpi_mapping_path",
+        type=str,
+        required=True,
+        help="Path to the kpi_mapping CSV file.",
+    )
+    parser.add_argument(
+        "--output_path", type=str, required=True, help="Path to the output directory."
+    )
 
     args = parser.parse_args()
 
@@ -132,7 +156,7 @@ if __name__ == "__main__":
     make_training_data(
         curator_data_path=args.curator_data_path,
         kpi_mapping_path=args.kpi_mapping_path,
-        output_path=args.output_path
+        output_path=args.output_path,
     )
 
     print("Training Data Successfully Made !!")

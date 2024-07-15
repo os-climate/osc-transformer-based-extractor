@@ -10,14 +10,16 @@ import os
 
 
 def check_csv_columns(file_path):
-    """
-    Check if the CSV file exists and contains the required columns.
+    """Check if the CSV file exists and contains the required columns.
 
     Args:
+    ----
         file_path (str): Path to the CSV file.
 
     Raises:
+    ------
         ValueError: If the file does not exist or does not contain the required columns.
+
     """
     if not os.path.exists(file_path):
         raise ValueError(f"Data path {file_path} does not exist.")
@@ -28,7 +30,9 @@ def check_csv_columns(file_path):
         df = pd.read_csv(file_path)
         missing_columns = [col for col in required_columns if col not in df.columns]
         if missing_columns:
-            raise ValueError(f"CSV file must contain the columns: {required_columns}. Missing columns: {missing_columns}")
+            raise ValueError(
+                f"CSV file must contain the columns: {required_columns}. Missing columns: {missing_columns}"
+            )
     except pd.errors.EmptyDataError:
         raise ValueError("CSV file is empty.")
     except pd.errors.ParserError:
@@ -38,14 +42,16 @@ def check_csv_columns(file_path):
 
 
 def check_output_dir(output_dir):
-    """
-    Check if the output directory is valid.
+    """Check if the output directory is valid.
 
     Args:
+    ----
         output_dir (str): Path to the output directory.
 
     Raises:
+    ------
         ValueError: If the directory does not exist or is not a directory.
+
     """
     if not os.path.exists(output_dir):
         raise ValueError(f"Output directory {output_dir} does not exist.")
@@ -70,7 +76,12 @@ class CustomDataset(Dataset):
         label = self.labels[idx]
 
         inputs = self.tokenizer(
-            question, context, truncation=True, padding="max_length", max_length=self.max_length, return_tensors="pt"
+            question,
+            context,
+            truncation=True,
+            padding="max_length",
+            max_length=self.max_length,
+            return_tensors="pt",
         )
 
         input_ids = inputs["input_ids"].squeeze()
@@ -83,13 +94,24 @@ class CustomDataset(Dataset):
         }
 
 
-def fine_tune_model(data_path, model_name, num_labels, max_length, epochs, batch_size, output_dir, save_steps):
+def fine_tune_model(
+    data_path,
+    model_name,
+    num_labels,
+    max_length,
+    epochs,
+    batch_size,
+    output_dir,
+    save_steps,
+):
     # Load your dataset into a pandas DataFrame
     df = pd.read_csv(data_path)
     df = df[["question", "context", "label"]]
 
     # Load Model and Tokenizer
-    model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=num_labels)
+    model = AutoModelForSequenceClassification.from_pretrained(
+        model_name, num_labels=num_labels
+    )
     tokenizer = AutoTokenizer.from_pretrained(model_name)
 
     # Split the data into training and evaluation sets
@@ -98,8 +120,16 @@ def fine_tune_model(data_path, model_name, num_labels, max_length, epochs, batch
     eval_df = eval_df.reset_index(drop=True)
 
     # Create training and evaluation datasets
-    train_dataset = CustomDataset(tokenizer, train_df["question"], train_df["context"], train_df["label"], max_length)
-    eval_dataset = CustomDataset(tokenizer, eval_df["question"], eval_df["context"], eval_df["label"], max_length)
+    train_dataset = CustomDataset(
+        tokenizer,
+        train_df["question"],
+        train_df["context"],
+        train_df["label"],
+        max_length,
+    )
+    eval_dataset = CustomDataset(
+        tokenizer, eval_df["question"], eval_df["context"], eval_df["label"], max_length
+    )
 
     # Define Training Arguments
     training_args = TrainingArguments(
@@ -152,15 +182,51 @@ def fine_tune_model(data_path, model_name, num_labels, max_length, epochs, batch
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Fine-tune a Hugging Face model on a custom dataset.")
-    parser.add_argument("--data_path", type=str, required=True, help="Path to the CSV file containing the dataset.")
-    parser.add_argument("--model_name", type=str, required=True, help="Name/ path of the pre-trained model to use(local or hugging face).")
-    parser.add_argument("--num_labels", type=int, required=True, help="Number of labels for the classification task.")
-    parser.add_argument("--max_length", type=int, required=True, help="Maximum length of the input sequences.")
-    parser.add_argument("--epochs", type=int, required=True, help="Number of training epochs.")
-    parser.add_argument("--batch_size", type=int, required=True, help="Batch size for training.")
-    parser.add_argument("--output_dir", type=str, required=True, help="Directory where the model will be saved during training.")
-    parser.add_argument("--save_steps", type=int, required=True, help="Number of steps before saving the model during training.")
+    parser = argparse.ArgumentParser(
+        description="Fine-tune a Hugging Face model on a custom dataset."
+    )
+    parser.add_argument(
+        "--data_path",
+        type=str,
+        required=True,
+        help="Path to the CSV file containing the dataset.",
+    )
+    parser.add_argument(
+        "--model_name",
+        type=str,
+        required=True,
+        help="Name/ path of the pre-trained model to use(local or hugging face).",
+    )
+    parser.add_argument(
+        "--num_labels",
+        type=int,
+        required=True,
+        help="Number of labels for the classification task.",
+    )
+    parser.add_argument(
+        "--max_length",
+        type=int,
+        required=True,
+        help="Maximum length of the input sequences.",
+    )
+    parser.add_argument(
+        "--epochs", type=int, required=True, help="Number of training epochs."
+    )
+    parser.add_argument(
+        "--batch_size", type=int, required=True, help="Batch size for training."
+    )
+    parser.add_argument(
+        "--output_dir",
+        type=str,
+        required=True,
+        help="Directory where the model will be saved during training.",
+    )
+    parser.add_argument(
+        "--save_steps",
+        type=int,
+        required=True,
+        help="Number of steps before saving the model during training.",
+    )
 
     args = parser.parse_args()
 
@@ -175,12 +241,14 @@ if __name__ == "__main__":
         epochs=args.epochs,
         batch_size=args.batch_size,
         output_dir=args.output_dir,
-        save_steps=args.save_steps
+        save_steps=args.save_steps,
     )
 
-    print(f"Model- {args.model_name} Trained and Saved Successfully at {args.output_dir}")
+    print(
+        f"Model- {args.model_name} Trained and Saved Successfully at {args.output_dir}"
+    )
 
-'''
+"""
 To run the file in CMD
 
 python fine_tune.py \
@@ -193,4 +261,4 @@ python fine_tune.py \
   --output_dir "./saved_models_during_training" \
   --save_steps 500
 
-'''
+"""
