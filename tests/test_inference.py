@@ -1,6 +1,5 @@
 import os
 import pytest
-import sys
 import torch
 from unittest.mock import patch, MagicMock
 from osc_transformer_based_extractor.inference import (
@@ -9,8 +8,6 @@ from osc_transformer_based_extractor.inference import (
     check_question_context,
 )
 
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 # Define test data paths
 model_path_valid = "valid_model"
