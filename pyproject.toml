@@ -3,7 +3,7 @@ name = "osc-transformer-based-extractor"
 version = "0.1.0"
 description = "OS-Climate Data Extraction Tool"
 authors = [
-    {name = "David Besslich", email = "90916810+DaBeIDS@users.noreply.github.com"},
+    {name = "Tanishq More", email = "tanishq.more@investmentdataservices.com"},
 ]
 requires-python = ">=3.9"
 readme = "README.rst"
@@ -26,7 +26,7 @@ classifiers = [
   "Topic :: Software Development",
 ]
 dependencies = [
-    "torch>=2.2.2",
+    "torch>=2.3.1",
     "pandas>=2.2.2",
     "tokenizers>=0.19.1",
     "ipykernel>=6.29.4",
@@ -36,8 +36,9 @@ dependencies = [
     "pytest-cov>=5.0.0",
     "scikit-learn>=1.5.0",
     "accelerate>=0.31.0",
-    "typer>=0.12.3",
-    "poetry>=1.8.3",
+    "typer[all]>=0.12.3",
+    "rich>=13.7.1",
+    "numpy>=2.0.0",
 ]
 
 [project.urls]
@@ -56,10 +57,10 @@ build-backend = "pdm.backend"
 license-files = ["LICENSES.txt"]
 
 [project.scripts]
-osc-transformer-based-extractor = "osc_transformer_based_extractor.skeleton:run"
+osc-transformer-based-extractor = "osc_transformer_based_extractor.main:app"
 
 [project.optional-dependencies]
-  dev = [
+dev = [
   "pylint",
   "toml",
   "yapf",
@@ -67,10 +68,8 @@ osc-transformer-based-extractor = "osc_transformer_based_extractor.skeleton:run"
 ]
 test = [
   "pytest",
-  "pytest-cov",
+  "pytest-cov"
 ]
-
-[tool.setuptools_scm]
 
 [tool.pdm.scripts]
 pre_release = "scripts/dev-versioning.sh"
@@ -81,12 +80,21 @@ docs = { shell = "cd docs && mkdocs serve", help = "Start the dev server for doc
 lint = "pre-commit run --all-files"
 complete = { call = "tasks.complete:main", help = "Create autocomplete files for bash and fish" }
 
+
+# Define CLI commands
+osc-transformer-based-extractor = "osc_transformer_based_extractor.main:app"
+
 [tool.pdm.dev-dependencies]
 test = ["pdm[pytest]", "pytest-cov"]
 tox = ["tox", "tox-pdm>=0.5"]
 docs = ["sphinx>=7.2.6", "sphinx-copybutton>=0.5.2"]
 dev = ["tox>=4.11.3", "tox-pdm>=0.7.0"]
 lint = ["pre-commit", "pyproject-flake8"]
+
+####
+osc-transformer-based-extractor = { path = "osc_transformer_based_extractor" }
+
+
 
 [tool.coverage.run]
 source = ["src"]
