@@ -3,7 +3,7 @@
 # Module: inference
 # Author: Tanishq-ids
 
-import argparse
+
 import os
 import torch
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
