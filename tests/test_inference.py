@@ -1,5 +1,4 @@
-"""
-Test module for inference functions.
+"""Test module for inference functions.
 
 This module contains test cases for the inference functions in the
 osc_transformer_based_extractor.inference module.
@@ -28,8 +27,7 @@ os.makedirs(tokenizer_path_valid, exist_ok=True)
 
 
 def test_check_model_and_tokenizer_path():
-    """
-    Test the check_model_and_tokenizer_path function.
+    """Test the check_model_and_tokenizer_path function.
 
     This test verifies that the function correctly identifies valid
     and invalid model and tokenizer paths.
@@ -52,8 +50,7 @@ def test_check_model_and_tokenizer_path():
 
 
 def test_check_question_context():
-    """
-    Test the check_question_context function.
+    """Test the check_question_context function.
 
     This test verifies that the function correctly handles valid and
     invalid question and context inputs.
@@ -88,8 +85,7 @@ def test_check_question_context():
 )
 @patch("osc_transformer_based_extractor.inference.AutoTokenizer.from_pretrained")
 def test_get_inference(mock_tokenizer, mock_model):
-    """
-    Test the get_inference function.
+    """Test the get_inference function.
 
     This test verifies that the get_inference function correctly performs
     inference using the provided model and tokenizer mocks.
