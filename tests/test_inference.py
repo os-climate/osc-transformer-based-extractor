@@ -1,3 +1,10 @@
+"""
+Test module for inference functions.
+
+This module contains test cases for the inference functions in the
+osc_transformer_based_extractor.inference module.
+"""
+
 import os
 import pytest
 import torch
@@ -21,6 +28,12 @@ os.makedirs(tokenizer_path_valid, exist_ok=True)
 
 
 def test_check_model_and_tokenizer_path():
+    """
+    Test the check_model_and_tokenizer_path function.
+
+    This test verifies that the function correctly identifies valid
+    and invalid model and tokenizer paths.
+    """
     # Test valid paths
     assert (
         check_model_and_tokenizer_path(model_path_valid, tokenizer_path_valid) is None
@@ -39,6 +52,12 @@ def test_check_model_and_tokenizer_path():
 
 
 def test_check_question_context():
+    """
+    Test the check_question_context function.
+
+    This test verifies that the function correctly handles valid and
+    invalid question and context inputs.
+    """
     # Test valid inputs
     check_question_context(
         "What is the capital of France?", "Paris is the capital of France."
@@ -69,6 +88,12 @@ def test_check_question_context():
 )
 @patch("osc_transformer_based_extractor.inference.AutoTokenizer.from_pretrained")
 def test_get_inference(mock_tokenizer, mock_model):
+    """
+    Test the get_inference function.
+
+    This test verifies that the get_inference function correctly performs
+    inference using the provided model and tokenizer mocks.
+    """
     # Mock tokenizer and model
     tokenizer_mock = MagicMock()
     model_mock = MagicMock()
