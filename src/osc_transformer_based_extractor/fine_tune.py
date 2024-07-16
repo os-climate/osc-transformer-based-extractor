@@ -9,7 +9,7 @@ This script performs the following steps:
 5. Saves the fine-tuned model and tokenizer.
 """
 
-import argparse
+
 import os
 import pandas as pd
 import torch
