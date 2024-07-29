@@ -6,8 +6,8 @@ functions and classes for extracting data using transformer-based models tailore
 for OSC (Open Source Communications) data.
 
 Module contents:
-- relevance_detetctor
-- main: Main module for orchestrating the execution of the extractor.
+- fine_tune: Module for fine-tuning transformer models.
+- inference: Module for performing inference with transformer models.
 
 This module should be imported to use the OSC transformer-based extractor package.
 

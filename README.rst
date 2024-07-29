@@ -13,7 +13,7 @@ OS-Climate Data Extraction Tool
 
 This project provides an CLI tool and python scripts to train a HuggingFace Transformer model or a local Transformer model and perform inference with it. The primary goal of the inference is to determine the relevance between a given question and context.
 
-Installation
+Quick Start
 ^^^^^^^^^^^^^
 
 To install the OSC Transformer Based Extractor CLI, use pip:
@@ -22,21 +22,75 @@ To install the OSC Transformer Based Extractor CLI, use pip:
 
     $ pip install osc-transformer-based-extractor
 
-Alternatively, you can clone the repository from GitHub for a quick start:
+Afterwards you can use the tooling as a CLI tool by simply typing:
 
 .. code-block:: shell
 
-    $ git clone https://github.com/os-climate/osc-transformer-based-extractor/
+We are using typer to have a nice CLI tool here. All details and help will be shown in the CLI
+tool itself and are not described here in more detail.
+
+**Example**: Assume the folder structure is like that:
+
+.. code-block:: text
+
+    project/
+    │
+    ├── kpi_mapping.csv
+    ├── training_data.csv
+    ├── data/
+    │   └── (json files for inference command)
+    ├── model/
+    │   └── (model-related files go here)
+    |── saved__model/
+    |   └── (output files trained models)
+    ├── output/
+    │   └── (ouput files from inference command)
+
+
+Then you can now simply run (after installation of osc-transformer-based-extractor)
+the following command to fine-tune the model on the data:
+
+.. code-block:: shell
+
+  $ osc-transformer-based-extractor relevance-detector fine-tune \
+    --data_path "project/training_data.csv" \
+    --model_name "bert-base-uncased" \
+    --num_labels 2 \
+    --max_length 128 \
+    --epochs 3 \
+    --batch_size 16 \
+    --output_dir "project/saved__model/" \
+    --save_steps 500
+
+Also, the following command can be run to perform inference:
+
+.. code-block:: shell
+
+  $ osc-transformer-based-extractor relevance-detector perform-inference \
+    --folder_path "project/data/" \
+    --kpi_mapping_path "project/kpi_mapping.csv" \
+    --output_path "project/output/" \
+    --model_path "project/model/" \
+    --tokenizer_path "project/model/" \
+    --threshold 0.5
 
 
 ***************
 Training Data
 ***************
-To train the model, you need data from the curator module. The data is in CSV format. You can train the model either using the CLI or by calling the function directly in Python.
-To train the model, you need data from the curator module. The data is in CSV format. You can train the model either using the CLI or by calling the function directly in Python.
+
+Training File
+^^^^^^^^^^^^^^^
+
+To train the model, you need a CSV file with columns:
+     * ``Question``
+     * ``Context``
+     * ``Label``
+
+Also additionally, the output of the https://github.com/os-climate/osc-transformer-presteps module can also be used. the output will look like following
 Sample Data:
 
-.. list-table:: Company Information
+.. list-table:: traning_Data.csv
    :header-rows: 1
 
    * - Question
@@ -65,156 +119,24 @@ Sample Data:
      - 1022
 
 
+KPI Mapping File
+^^^^^^^^^^^^^^^^^^^^^
+The Inference command will need a kpi-mapping.csv file, which looks like:
 
+.. list-table:: kpi_mapping.csv
+   :header-rows: 1
 
-***************
-CLI Usage
-***************
+   * - kpi_id
+     - question
+     - sectors
+     - add_year
+     - kpi_category
+   * - 1
+     - In which year was the annual report or the sustainability report published?
+     - OG, CM, CU
+     - FALSE
+     - TEXT
 
-The CLI command `osc-transformer-based-extractor` provides two main functions: training and inference. You can access detailed information about these functions by running the CLI command without any arguments.
-
-**Commands**
-
-
-
-* ``fine-tune``  :  Fine-tune a pre-trained Hugging Face model on a custom dataset.
-* ``perform-inference`` :  Perform inference using a pre-trained sequence classification model.
-
-* ``fine-tune``  :  Fine-tune a pre-trained Hugging Face model on a custom dataset.
-* ``perform-inference`` :  Perform inference using a pre-trained sequence classification model.
-
-
-
-************************
-Using Github Repository
-************************
-
-Setting Up the Environment
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-To set up the working environment for this repository, follow these steps:
-
-1. **Clone the repository**:
-
-.. code-block:: shell
-
-	$ git clone https://github.com/os-climate/osc-transformer-based-extractor/
-    $ cd osc-transformer-based-extractor
-
-
-
-2. **Create a new virtual environment and activate it**:
-
-.. code-block:: shell
-
-   		$ python -m venv venv
-   		$ source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-
-
-
-3. **Install PDM**:
-
-.. code-block:: shell
-
-   		$ pip install pdm
-
-
-
-4. **Sync the environment using PDM**:
-
-.. code-block:: shell
-
-   		$ pdm sync
-
-
-
-5. **Add any new library**:
-
-.. code-block:: shell
-
-   		$ pdm add <library-name>
-
-
-Train the model
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-To train the model, you can use the following code snippet:
-
-.. code-block:: shell
-
-    $ python fine_tune.py \
-      --data_path "data/train_data.csv" \
-      --model_name "sentence-transformers/all-MiniLM-L6-v2" \
-      --num_labels 2 \
-      --max_length 512 \
-      --epochs 2 \
-      --batch_size 4 \
-      --output_dir "./saved_models_during_training" \
-      --save_steps 500
-
-OR use function calling:
-
-.. code-block:: python
-
-    from fine_tune import fine_tune_model
-
-
-    fine_tune_model(
-        data_path="data/train_data.csv",
-        model_name="sentence-transformers/all-MiniLM-L6-v2",
-        num_labels=2,
-        max_length=512,
-        epochs=2,
-        batch_size=4,
-        output_dir="./saved_models_during_training",
-        save_steps=500
-    )
-
-**Parameters**
-
-* ``data_path (str)`` : Path to the training data CSV file.
-* ``model_name (str)`` : Pre-trained model name from HuggingFace.
-* ``num_labels (int)`` : Number of labels for the classification task.
-* ``max_length (int)`` : Maximum sequence length.
-* ``epochs (int)`` : Number of training epochs.
-* ``batch_size (int)`` : Batch size for training.
-* ``output_dir (str)`` : Directory to save the trained models.
-* ``save_steps (int)`` : Number of steps between saving checkpoints.
-
-
-Performing Inference
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-To perform inference and determine the relevance between a question and context, use the following code snippet:
-
-.. code-block:: python
-
-  $ python inference.py
-      --question "What is the capital of France?"
-      --context "Paris is the capital of France."
-      --model_path /path/to/model
-      --tokenizer_path /path/to/tokenizer
-
-OR use function calling:
-
-.. code-block:: python
-
-  from inference import get_inference
-
-
-  result = get_inference(
-      question="What is the relevance?",
-      context="This is a sample paragraph.",
-      model_path="path/to/model",
-      tokenizer_path="path/to/tokenizer" )
-
-
-**Parameters**
-
-* ``question (str)`` : The question for inference.
-* ``context (str)`` : The paragraph to be analyzed.
-* ``model_path (str)`` : Path to the pre-trained model.
-* ``tokenizer_path (str)`` : Path to the tokenizer of the pre-trained model.
 
 
 
@@ -222,21 +144,51 @@ OR use function calling:
 Developer Notes
 ************************
 
-For adding new dependencies use pdm. First install via pip::
+Use code directly without CLI via Github Repository
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First clone the repository to your local environment::
+
+    $ git clone https://github.com/os-climate/osc-transformer-based-extractor/
+
+We are using pdm to manage the packages and tox for a stable test framework.
+Hence, first install pdm (possibly in a virtual environment) via::
 
     $ pip install pdm
 
-And then you could add new packages via pdm add. For example numpy via::
+Afterwards sync you system via::
+
+    $ pdm sync
+
+Now you have multiple demos on how to go on. See folder
+[here](demo)
+
+pdm
+---
+
+For adding new dependencies use pdm. You could add new packages via pdm add.
+For example numpy via::
 
     $ pdm add numpy
 
-For running linting tools just to the following::
+For a very detailed description check the homepage of the pdm project:
+
+https://pdm-project.org/en/latest/
+
+
+tox
+---
+
+For running linting tools we use tox which you run outside of your virtual environment::
 
     $ pip install tox
     $ tox -e lint
     $ tox -e test
 
+This will automatically apply some checks on your code and run the provided pytests. See
+more details on tox on the homepage of the tox project:
 
+https://tox.wiki/en/4.16.0/
 
 ************************
 Contributing

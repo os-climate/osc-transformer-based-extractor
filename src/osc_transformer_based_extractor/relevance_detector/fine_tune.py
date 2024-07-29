@@ -9,15 +9,11 @@ This script performs the following steps:
 5. Saves the fine-tuned model and tokenizer.
 """
 
+
 import os
 import pandas as pd
 import torch
-from transformers import (
-    TrainingArguments,
-    Trainer,
-    AutoModelForSequenceClassification,
-    AutoTokenizer,
-)
+from transformers import TrainingArguments, Trainer, AutoModelForSequenceClassification, AutoTokenizer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from torch.utils.data import Dataset
@@ -42,9 +38,7 @@ def check_csv_columns(file_path):
         df = pd.read_csv(file_path)
         missing_columns = [col for col in required_columns if col not in df.columns]
         if missing_columns:
-            raise ValueError(
-                f"CSV file must contain the columns: {required_columns}. Missing columns: {missing_columns}"
-            )
+            raise ValueError(f"CSV file must contain the columns: {required_columns}. Missing columns: {missing_columns}")
     except pd.errors.EmptyDataError:
         raise ValueError("CSV file is empty.")
     except pd.errors.ParserError:
@@ -117,12 +111,7 @@ class CustomDataset(Dataset):
         label = self.labels[idx]
 
         inputs = self.tokenizer(
-            question,
-            context,
-            truncation=True,
-            padding="max_length",
-            max_length=self.max_length,
-            return_tensors="pt",
+            question, context, truncation=True, padding="max_length", max_length=self.max_length, return_tensors="pt"
         )
 
         input_ids = inputs["input_ids"].squeeze()
@@ -135,16 +124,7 @@ class CustomDataset(Dataset):
         }
 
 
-def fine_tune_model(
-    data_path,
-    model_name,
-    num_labels,
-    max_length,
-    epochs,
-    batch_size,
-    output_dir,
-    save_steps,
-):
+def fine_tune_model(data_path, model_name, num_labels, max_length, epochs, batch_size, output_dir, save_steps):
     """
     Fine-tune a pre-trained model on a custom dataset.
 
@@ -163,9 +143,7 @@ def fine_tune_model(
     df = df[["question", "context", "label"]]
 
     # Load Model and Tokenizer
-    model = AutoModelForSequenceClassification.from_pretrained(
-        model_name, num_labels=num_labels
-    )
+    model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=num_labels)
     tokenizer = AutoTokenizer.from_pretrained(model_name)
 
     # Split the data into training and evaluation sets
@@ -174,16 +152,8 @@ def fine_tune_model(
     eval_df = eval_df.reset_index(drop=True)
 
     # Create training and evaluation datasets
-    train_dataset = CustomDataset(
-        tokenizer,
-        train_df["question"],
-        train_df["context"],
-        train_df["label"],
-        max_length,
-    )
-    eval_dataset = CustomDataset(
-        tokenizer, eval_df["question"], eval_df["context"], eval_df["label"], max_length
-    )
+    train_dataset = CustomDataset(tokenizer, train_df["question"], train_df["context"], train_df["label"], max_length)
+    eval_dataset = CustomDataset(tokenizer, eval_df["question"], eval_df["context"], eval_df["label"], max_length)
 
     # Define Training Arguments
     training_args = TrainingArguments(
@@ -215,14 +185,15 @@ def fine_tune_model(
     # Predict labels for the evaluation dataset
     predictions = trainer.predict(eval_dataset)
     predicted_labels = predictions.predictions.argmax(axis=1)
-    true_labels = [item["labels"].item() for item in eval_dataset]
+    true_labels = [eval_dataset[idx]['labels'].item() for idx in range(len(eval_dataset))]
 
     # Calculate accuracy
     accuracy = accuracy_score(true_labels, predicted_labels)
     print("Accuracy:", accuracy)
 
     # Print inputs along with predicted labels
-    for i, eva_data in enumerate(eval_dataset):
+    for i in range(len(eval_dataset)):
+        eva_data = eval_dataset[i]
         input_ids = eva_data["input_ids"]
         true_label = true_labels[i]
         predicted_label = predicted_labels[i]
