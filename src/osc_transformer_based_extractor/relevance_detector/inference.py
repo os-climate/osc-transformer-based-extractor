@@ -3,7 +3,6 @@
 # Module: inference
 # Author: Tanishq-ids
 
-
 import os
 import torch
 import pandas as pd
@@ -27,7 +26,9 @@ def validate_path_exists(path: str, which_path: str):
         raise ValueError(f"{which_path}: {path} does not exist.")
 
 
-def get_inference(question: str, context: str, model_path: str, tokenizer_path: str, threshold: float):
+def get_inference(
+    question: str, context: str, model_path: str, tokenizer_path: str, threshold: float
+):
     """
     Perform inference using a pre-trained sequence classification model.
 
@@ -49,7 +50,14 @@ def get_inference(question: str, context: str, model_path: str, tokenizer_path: 
     tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
 
     # Tokenize inputs
-    inputs = tokenizer(question, context, return_tensors="pt", truncation=True, padding=True, max_length=512)
+    inputs = tokenizer(
+        question,
+        context,
+        return_tensors="pt",
+        truncation=True,
+        padding=True,
+        max_length=512,
+    )
 
     # Forward pass
     with torch.no_grad():
@@ -66,7 +74,14 @@ def get_inference(question: str, context: str, model_path: str, tokenizer_path: 
     return label, positive_class_prob
 
 
-def run_full_inference(json_folder_path: str, kpi_mapping_path: str, output_path: str, model_path: str, tokenizer_path: str, threshold: float):
+def run_full_inference(
+    json_folder_path: str,
+    kpi_mapping_path: str,
+    output_path: str,
+    model_path: str,
+    tokenizer_path: str,
+    threshold: float,
+):
     """
     Perform inference on JSON files in a specified folder and save the results to Excel files.
 
@@ -95,7 +110,7 @@ def run_full_inference(json_folder_path: str, kpi_mapping_path: str, output_path
 
     # Read the KPI mapping outside the loop
     kpi_mapping = pd.read_csv(kpi_mapping_path)
-    kpi_mapping = kpi_mapping[['kpi_id', 'question']]
+    kpi_mapping = kpi_mapping[["kpi_id", "question"]]
 
     for file_name in os.listdir(json_folder_path):
         if file_name.endswith(".json"):
@@ -111,39 +126,47 @@ def run_full_inference(json_folder_path: str, kpi_mapping_path: str, output_path
             # Iterate through the nested dictionary structure
             for page_idx in data:
                 for paras in data[page_idx]:
-                    pdf_name = data[page_idx][paras]['pdf_name']
-                    unique_paragraph_id = data[page_idx][paras]['unique_paragraph_id']
-                    paragraph = data[page_idx][paras]['paragraph']
+                    pdf_name = data[page_idx][paras]["pdf_name"]
+                    unique_paragraph_id = data[page_idx][paras]["unique_paragraph_id"]
+                    paragraph = data[page_idx][paras]["paragraph"]
 
                     # Append a dictionary to the list
-                    data_list.append({
-                        'page': page_idx,
-                        'pdf_name': pdf_name,
-                        'unique_paragraph_id': unique_paragraph_id,
-                        'paragraph': paragraph
-                    })
+                    data_list.append(
+                        {
+                            "page": page_idx,
+                            "pdf_name": pdf_name,
+                            "unique_paragraph_id": unique_paragraph_id,
+                            "paragraph": paragraph,
+                        }
+                    )
 
             df = pd.DataFrame(data_list)
 
             # Merge with KPI mapping using a cross join
-            merged_df = df.merge(kpi_mapping, how='cross')
+            merged_df = df.merge(kpi_mapping, how="cross")
 
             labels = []
             probs = []
 
             # Iterate over the rows of the DataFrame and perform inference
-            for _ , row in tqdm(merged_df.iterrows(), total=merged_df.shape[0]):
-                question = row['question']
-                context = row['paragraph']
-                label, prob = get_inference(question=question, context=context, model_path=model_path, tokenizer_path=tokenizer_path , threshold=threshold)
+            for _, row in tqdm(merged_df.iterrows(), total=merged_df.shape[0]):
+                question = row["question"]
+                context = row["paragraph"]
+                label, prob = get_inference(
+                    question=question,
+                    context=context,
+                    model_path=model_path,
+                    tokenizer_path=tokenizer_path,
+                    threshold=threshold,
+                )
                 labels.append(label)
                 probs.append(prob)
 
             # Add results to the DataFrame
-            merged_df['paragraph_relevance_flag'] = labels
-            merged_df['paragraph_relevance_score(for_label=1)'] = probs
+            merged_df["paragraph_relevance_flag"] = labels
+            merged_df["paragraph_relevance_score(for_label=1)"] = probs
 
-            excel_name = Path(file_name).with_suffix('.xlsx').name
+            excel_name = Path(file_name).with_suffix(".xlsx").name
             output_file_path = Path(output_path) / excel_name
 
             try:

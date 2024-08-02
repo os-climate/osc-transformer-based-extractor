@@ -9,8 +9,13 @@ Example usage:
   osc-transformer-based-extractor relevance-detector fine-tune data.csv bert-base-uncased 5 128 3 32 trained_models/ 500
   osc-transformer-based-extractor relevance-detector inference "/all_json/" "data/kpi_mapping.csv" "output_dir/"  "model/" "tokenizer/" 0.8
 """
+
 import typer
-from .relevance_detector.fine_tune import check_csv_columns, check_output_dir, fine_tune_model
+from .relevance_detector.fine_tune import (
+    check_csv_columns,
+    check_output_dir,
+    fine_tune_model,
+)
 from .relevance_detector.inference import validate_path_exists, run_full_inference
 
 # Main Typer app
@@ -53,16 +58,27 @@ def relevance_detector(ctx: typer.Context):
 # Command for fine-tuning the model
 @relevance_detector_app.command("fine-tune")
 def fine_tune(
-    data_path: str = typer.Argument(..., help="Path to the CSV file containing training data."),
-    model_name: str = typer.Argument(..., help="Name of the pre-trained model on HuggingFace OR path to local model directory."),
-    num_labels: int = typer.Argument(..., help="Number of labels for the classification task."),
+    data_path: str = typer.Argument(
+        ..., help="Path to the CSV file containing training data."
+    ),
+    model_name: str = typer.Argument(
+        ...,
+        help="Name of the pre-trained model on HuggingFace OR path to local model directory.",
+    ),
+    num_labels: int = typer.Argument(
+        ..., help="Number of labels for the classification task."
+    ),
     max_length: int = typer.Argument(..., help="Maximum length of the sequences."),
     epochs: int = typer.Argument(..., help="Number of training epochs."),
     batch_size: int = typer.Argument(..., help="Batch size for training."),
-    output_dir: str = typer.Argument(..., help="Directory to save the fine-tuned model."),
-    save_steps: int = typer.Argument(..., help="Number of steps between saving model checkpoints.")
+    output_dir: str = typer.Argument(
+        ..., help="Directory to save the fine-tuned model."
+    ),
+    save_steps: int = typer.Argument(
+        ..., help="Number of steps between saving model checkpoints."
+    ),
 ):
-    """ Fine-tune a pre-trained Hugging Face model on a custom dataset."""
+    """Fine-tune a pre-trained Hugging Face model on a custom dataset."""
     check_csv_columns(data_path)
     check_output_dir(output_dir)
 
@@ -74,7 +90,7 @@ def fine_tune(
         epochs=epochs,
         batch_size=batch_size,
         output_dir=output_dir,
-        save_steps=save_steps
+        save_steps=save_steps,
     )
 
     typer.echo(f"Model '{model_name}' trained and saved successfully at {output_dir}")
@@ -83,12 +99,22 @@ def fine_tune(
 # Command for performing inference
 @relevance_detector_app.command("inference")
 def inference(
-    json_folder_path: str = typer.Argument(..., help="Folder path where all JSONs are stored."),
+    json_folder_path: str = typer.Argument(
+        ..., help="Folder path where all JSONs are stored."
+    ),
     kpi_mapping_path: str = typer.Argument(..., help="Path to the kpi_mapping.csv"),
-    output_path: str = typer.Argument(..., help="Path to the folder where the output Excel files will be saved."),
-    model_path: str = typer.Argument(..., help="Path to the pre-trained model directory OR name on huggingface."),
-    tokenizer_path: str = typer.Argument(..., help="Path to the tokenizer directory OR name on huggingface."),
-    threshold: float = typer.Argument(0.5, help="Threshold value for prediction confidence.")
+    output_path: str = typer.Argument(
+        ..., help="Path to the folder where the output Excel files will be saved."
+    ),
+    model_path: str = typer.Argument(
+        ..., help="Path to the pre-trained model directory OR name on huggingface."
+    ),
+    tokenizer_path: str = typer.Argument(
+        ..., help="Path to the tokenizer directory OR name on huggingface."
+    ),
+    threshold: float = typer.Argument(
+        0.5, help="Threshold value for prediction confidence."
+    ),
 ):
     """Perform inference using a pre-trained model on all JSON files and KPI mapping file, saving an output Excel file for each JSON file in a specified folder."""
     try:
@@ -102,7 +128,7 @@ def inference(
             output_path=output_path,
             model_path=model_path,
             tokenizer_path=tokenizer_path,
-            threshold=threshold
+            threshold=threshold,
         )
 
         typer.echo("Inference completed successfully!")
