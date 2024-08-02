@@ -43,8 +43,8 @@ def get_inference(
         int: Predicted label ID (0 or 1).
         float: class probability
     """
-    model_path = Path(model_path)
-    tokenizer_path = Path(tokenizer_path)
+    model_path = str(Path(model_path))
+    tokenizer_path = str(Path(tokenizer_path))
 
     model = AutoModelForSequenceClassification.from_pretrained(model_path)
     tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
