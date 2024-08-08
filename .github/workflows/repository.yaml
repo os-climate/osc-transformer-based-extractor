@@ -124,7 +124,7 @@ jobs:
 
       - name: "Create initial v0.0.1 tag [conditional]"
         id: set-initial-tag
-        if: steps.semantic-tag-latest.outputs.tag-missing == 'true' && env.CREATE_MISSING_TAG
+        if: steps.semantic-tag-latest.outputs.invalid == 'true' && env.CREATE_MISSING_TAG
         uses: softprops/action-gh-release@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -133,7 +133,7 @@ jobs:
 
       - name: "Build: Python project"
         id: python-project-build
-        if: steps.semantic-tag-latest.outputs.missing == 'false'
+        if: steps.semantic-tag-latest.outputs.invalid == 'false'
         # yamllint disable-line rule:line-length
         uses: os-climate/osc-github-devops/.github/actions/python-project-build@main
         with:
