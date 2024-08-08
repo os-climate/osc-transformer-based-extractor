@@ -295,10 +295,6 @@ jobs:
   pypi:
     name: "Publish Package"
     # Only publish on tag pushes
-    if:
-      # startsWith(github.ref, 'refs/tags/') &&
-      needs.python-build.outputs.publish == 'true'
-      # contains(github.event.head_commit.message, '[release]')
     needs: [python-build, github-workflow-metadata, testpypi]
     runs-on: ubuntu-latest
     environment:
