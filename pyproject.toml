@@ -1,6 +1,6 @@
 [project]
 name = "osc-transformer-based-extractor"
-version = "0.1.0"
+version = "0.1.1"
 description = "OS-Climate Data Extraction Tool"
 authors = [
     {name = "Tanishq More", email = "tanishq.more@investmentdataservices.com"},
