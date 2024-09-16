@@ -1,31 +1,30 @@
-osc\_transformer\_based\_extractor namespace
-============================================
+osc\_transformer\_based\_extractor package
+==========================================
 
-.. py:module:: osc_transformer_based_extractor
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   osc_transformer_based_extractor.kpi_detection
+   osc_transformer_based_extractor.relevance_detector
 
 Submodules
 ----------
 
-osc\_transformer\_based\_extractor.fine\_tune module
-----------------------------------------------------
-
-.. automodule:: osc_transformer_based_extractor.fine_tune
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-osc\_transformer\_based\_extractor.inference module
+osc\_transformer\_based\_extractor.main\_cli module
 ---------------------------------------------------
 
-.. automodule:: osc_transformer_based_extractor.inference
+.. automodule:: osc_transformer_based_extractor.main_cli
    :members:
    :undoc-members:
    :show-inheritance:
 
-osc\_transformer\_based\_extractor.make\_training\_data\_from\_curator module
------------------------------------------------------------------------------
+Module contents
+---------------
 
-.. automodule:: osc_transformer_based_extractor.make_training_data_from_curator
+.. automodule:: osc_transformer_based_extractor
    :members:
    :undoc-members:
    :show-inheritance:

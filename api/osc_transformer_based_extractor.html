@@ -5,14 +5,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>osc_transformer_based_extractor namespace &#8212; osc-transformer-based-extractor unknown documentation</title>
+    <title>osc_transformer_based_extractor package &#8212; osc-transformer-based-extractor unknown documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=89af775e" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=c058f7c8" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=0ca6144b" />
     <script src="../_static/documentation_options.js?v=3f1b9271"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="osc_transformer_based_extractor.kpi_detection package" href="osc_transformer_based_extractor.kpi_detection.html" />
     <link rel="prev" title="osc_transformer_based_extractor" href="modules.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -31,164 +33,47 @@
 
           <div class="body" role="main">
             
-  <section id="module-osc_transformer_based_extractor">
-<span id="osc-transformer-based-extractor-namespace"></span><h1>osc_transformer_based_extractor namespace<a class="headerlink" href="#module-osc_transformer_based_extractor" title="Link to this heading">¶</a></h1>
+  <section id="osc-transformer-based-extractor-package">
+<h1>osc_transformer_based_extractor package<a class="headerlink" href="#osc-transformer-based-extractor-package" title="Link to this heading">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="osc_transformer_based_extractor.kpi_detection.html">osc_transformer_based_extractor.kpi_detection package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="osc_transformer_based_extractor.kpi_detection.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="osc_transformer_based_extractor.kpi_detection.html#osc-transformer-based-extractor-kpi-detection-cli-kpi-detection-module">osc_transformer_based_extractor.kpi_detection.cli_kpi_detection module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="osc_transformer_based_extractor.kpi_detection.html#osc-transformer-based-extractor-kpi-detection-inference-kpi-detection-module">osc_transformer_based_extractor.kpi_detection.inference_kpi_detection module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="osc_transformer_based_extractor.kpi_detection.html#osc-transformer-based-extractor-kpi-detection-train-kpi-detection-module">osc_transformer_based_extractor.kpi_detection.train_kpi_detection module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="osc_transformer_based_extractor.kpi_detection.html#module-osc_transformer_based_extractor.kpi_detection">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="osc_transformer_based_extractor.relevance_detector.html">osc_transformer_based_extractor.relevance_detector package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="osc_transformer_based_extractor.relevance_detector.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="osc_transformer_based_extractor.relevance_detector.html#osc-transformer-based-extractor-relevance-detector-cli-relevance-detector-module">osc_transformer_based_extractor.relevance_detector.cli_relevance_detector module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="osc_transformer_based_extractor.relevance_detector.html#osc-transformer-based-extractor-relevance-detector-fine-tune-module">osc_transformer_based_extractor.relevance_detector.fine_tune module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="osc_transformer_based_extractor.relevance_detector.html#osc-transformer-based-extractor-relevance-detector-inference-module">osc_transformer_based_extractor.relevance_detector.inference module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="osc_transformer_based_extractor.relevance_detector.html#module-osc_transformer_based_extractor.relevance_detector">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
 </section>
-<section id="module-osc_transformer_based_extractor.fine_tune">
-<span id="osc-transformer-based-extractor-fine-tune-module"></span><h2>osc_transformer_based_extractor.fine_tune module<a class="headerlink" href="#module-osc_transformer_based_extractor.fine_tune" title="Link to this heading">¶</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="osc_transformer_based_extractor.fine_tune.CustomDataset">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">osc_transformer_based_extractor.fine_tune.</span></span><span class="sig-name descname"><span class="pre">CustomDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">questions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contexts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_length</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/osc_transformer_based_extractor/fine_tune.html#CustomDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#osc_transformer_based_extractor.fine_tune.CustomDataset" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="osc_transformer_based_extractor.fine_tune.check_csv_columns">
-<span class="sig-prename descclassname"><span class="pre">osc_transformer_based_extractor.fine_tune.</span></span><span class="sig-name descname"><span class="pre">check_csv_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/osc_transformer_based_extractor/fine_tune.html#check_csv_columns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#osc_transformer_based_extractor.fine_tune.check_csv_columns" title="Link to this definition">¶</a></dt>
-<dd><p>Check if the CSV file exists and contains the required columns.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>file_path</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Path to the CSV file.</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.12/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – If the file does not exist or does not contain the required columns.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="osc_transformer_based_extractor.fine_tune.check_output_dir">
-<span class="sig-prename descclassname"><span class="pre">osc_transformer_based_extractor.fine_tune.</span></span><span class="sig-name descname"><span class="pre">check_output_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/osc_transformer_based_extractor/fine_tune.html#check_output_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#osc_transformer_based_extractor.fine_tune.check_output_dir" title="Link to this definition">¶</a></dt>
-<dd><p>Check if the output directory is valid.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>output_dir</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Path to the output directory.</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.12/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – If the directory does not exist or is not a directory.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="osc_transformer_based_extractor.fine_tune.fine_tune_model">
-<span class="sig-prename descclassname"><span class="pre">osc_transformer_based_extractor.fine_tune.</span></span><span class="sig-name descname"><span class="pre">fine_tune_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_steps</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/osc_transformer_based_extractor/fine_tune.html#fine_tune_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#osc_transformer_based_extractor.fine_tune.fine_tune_model" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<section id="osc-transformer-based-extractor-main-cli-module">
+<h2>osc_transformer_based_extractor.main_cli module<a class="headerlink" href="#osc-transformer-based-extractor-main-cli-module" title="Link to this heading">¶</a></h2>
 </section>
-<section id="module-osc_transformer_based_extractor.inference">
-<span id="osc-transformer-based-extractor-inference-module"></span><h2>osc_transformer_based_extractor.inference module<a class="headerlink" href="#module-osc_transformer_based_extractor.inference" title="Link to this heading">¶</a></h2>
-<p>This module contains utility functions for performing inference using pre-trained sequence classification models.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="osc_transformer_based_extractor.inference.check_model_and_tokenizer_path">
-<span class="sig-prename descclassname"><span class="pre">osc_transformer_based_extractor.inference.</span></span><span class="sig-name descname"><span class="pre">check_model_and_tokenizer_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/osc_transformer_based_extractor/inference.html#check_model_and_tokenizer_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#osc_transformer_based_extractor.inference.check_model_and_tokenizer_path" title="Link to this definition">¶</a></dt>
-<dd><p>Check if the model and tokenizer paths are valid.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>model_path</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Path to the model file.</p></li>
-<li><p><strong>tokenizer_path</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Path to the tokenizer file.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.12/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – If the model or tokenizer path does not exist.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="osc_transformer_based_extractor.inference.check_question_context">
-<span class="sig-prename descclassname"><span class="pre">osc_transformer_based_extractor.inference.</span></span><span class="sig-name descname"><span class="pre">check_question_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">question</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/osc_transformer_based_extractor/inference.html#check_question_context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#osc_transformer_based_extractor.inference.check_question_context" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="osc_transformer_based_extractor.inference.get_inference">
-<span class="sig-prename descclassname"><span class="pre">osc_transformer_based_extractor.inference.</span></span><span class="sig-name descname"><span class="pre">get_inference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">question</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.12/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/osc_transformer_based_extractor/inference.html#get_inference"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#osc_transformer_based_extractor.inference.get_inference" title="Link to this definition">¶</a></dt>
-<dd><p>Perform inference using a pre-trained sequence classification model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>question</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The question for inference.</p></li>
-<li><p><strong>context</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The context to be analyzed.</p></li>
-<li><p><strong>model_path</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Path to the pre-trained model.</p></li>
-<li><p><strong>tokenizer_path</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Path to the tokenizer to the pre-trained model.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Predicted label ID.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.12/library/functions.html#int" title="(in Python v3.12)">int</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-</section>
-<section id="module-osc_transformer_based_extractor.make_training_data_from_curator">
-<span id="osc-transformer-based-extractor-make-training-data-from-curator-module"></span><h2>osc_transformer_based_extractor.make_training_data_from_curator module<a class="headerlink" href="#module-osc_transformer_based_extractor.make_training_data_from_curator" title="Link to this heading">¶</a></h2>
-<p>Generate training data based on curator data and KPI mapping.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="osc_transformer_based_extractor.make_training_data_from_curator.check_curator_data_path">
-<span class="sig-prename descclassname"><span class="pre">osc_transformer_based_extractor.make_training_data_from_curator.</span></span><span class="sig-name descname"><span class="pre">check_curator_data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/osc_transformer_based_extractor/make_training_data_from_curator.html#check_curator_data_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#osc_transformer_based_extractor.make_training_data_from_curator.check_curator_data_path" title="Link to this definition">¶</a></dt>
-<dd><p>Check if curator data path exists and is a CSV file.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data_path</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Path to the curator data file.</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.12/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – If the path does not exist or is not a CSV file.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="osc_transformer_based_extractor.make_training_data_from_curator.check_kpi_mapping_path">
-<span class="sig-prename descclassname"><span class="pre">osc_transformer_based_extractor.make_training_data_from_curator.</span></span><span class="sig-name descname"><span class="pre">check_kpi_mapping_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/osc_transformer_based_extractor/make_training_data_from_curator.html#check_kpi_mapping_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#osc_transformer_based_extractor.make_training_data_from_curator.check_kpi_mapping_path" title="Link to this definition">¶</a></dt>
-<dd><p>Check if KPI mapping path exists and is a CSV file.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data_path</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Path to the KPI mapping file.</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.12/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – If the path does not exist or is not a CSV file.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="osc_transformer_based_extractor.make_training_data_from_curator.check_output_path">
-<span class="sig-prename descclassname"><span class="pre">osc_transformer_based_extractor.make_training_data_from_curator.</span></span><span class="sig-name descname"><span class="pre">check_output_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/osc_transformer_based_extractor/make_training_data_from_curator.html#check_output_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#osc_transformer_based_extractor.make_training_data_from_curator.check_output_path" title="Link to this definition">¶</a></dt>
-<dd><p>Check if the output path exists, if not create it.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>output_path</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Path to the output directory.</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.12/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – If the path is not a directory.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="osc_transformer_based_extractor.make_training_data_from_curator.make_training_data">
-<span class="sig-prename descclassname"><span class="pre">osc_transformer_based_extractor.make_training_data_from_curator.</span></span><span class="sig-name descname"><span class="pre">make_training_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">curator_data_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">kpi_mapping_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.12/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/osc_transformer_based_extractor/make_training_data_from_curator.html#make_training_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#osc_transformer_based_extractor.make_training_data_from_curator.make_training_data" title="Link to this definition">¶</a></dt>
-<dd><p>Generate training data based on curator data and KPI mapping.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>curator_data_path</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Path to the curator data CSV file.</p></li>
-<li><p><strong>kpi_mapping_path</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Path to the KPI mapping CSV file.</p></li>
-<li><p><strong>output_path</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Path to the output directory.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-
+<section id="module-osc_transformer_based_extractor">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-osc_transformer_based_extractor" title="Link to this heading">¶</a></h2>
+<p>Initialization module for OSC transformer-based extractor.</p>
+<p>This module initializes the OSC transformer-based extractor package. It provides
+functions and classes for extracting data using transformer-based models tailored
+for OSC (Open Source Communications) data.</p>
+<p>Module contents:
+- relevance_detetctor
+- main: Main module for orchestrating the execution of the extractor.</p>
+<p>This module should be imported to use the OSC transformer-based extractor package.</p>
 </section>
 </section>
 
@@ -197,7 +82,7 @@
           
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="../index.html">osc-transformer-based-extractor</a></h1>
 
@@ -208,7 +93,16 @@
 
 
 
-<h3>Navigation</h3>
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributions &amp; Help</a></li>
@@ -216,7 +110,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../authors.html">Authors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Module Reference</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">osc_transformer_based_extractor namespace</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">osc_transformer_based_extractor package</a></li>
 </ul>
 </li>
 </ul>
@@ -227,20 +121,11 @@
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="modules.html">osc_transformer_based_extractor</a><ul>
       <li>Previous: <a href="modules.html" title="previous chapter">osc_transformer_based_extractor</a></li>
+      <li>Next: <a href="osc_transformer_based_extractor.kpi_detection.html" title="next chapter">osc_transformer_based_extractor.kpi_detection package</a></li>
   </ul></li>
   </ul></li>
 </ul>
 </div>
-<search id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</search>
-<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -257,8 +142,8 @@
       &#169;2023, Matthew Watkins.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
-      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.0.2</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |
       <a href="../_sources/api/osc_transformer_based_extractor.rst.txt"
