@@ -22,7 +22,7 @@ jobs:
       - name: "Populate environment variables"
         id: parse-project-metadata
         # yamllint disable-line rule:line-length
-        uses: os-climate/devops-reusable-workflows/.github/actions/python-versions-matrix@main
+        uses: os-climate/devops-toolkit/.github/actions/python-versions-matrix@main
 
   testing:
     name: "Run unit tests"

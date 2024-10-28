@@ -26,7 +26,7 @@ jobs:
       - name: "Parse: pyproject.toml"
         id: parse-project-metadata
         # yamllint disable-line rule:line-length
-        uses: os-climate/devops-reusable-workflows/.github/actions/python-versions-matrix@main
+        uses: os-climate/devops-toolkit/.github/actions/python-versions-matrix@main
 
   builds:
     name: "Python builds"
@@ -97,4 +97,4 @@ jobs:
         id: twine-check-artefacts
         env:
           package-path: ${{ env.package-path }}
-        uses: os-climate/devops-reusable-workflows/.github/actions/twine-check-artefacts@main
+        uses: os-climate/devops-toolkit/.github/actions/python-twine-check@main
