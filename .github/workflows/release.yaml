@@ -157,7 +157,7 @@ jobs:
           rm dist/*.sig*
 
       - name: 'Setup PDM for build commands'
-        uses: pdm-project/setup-pdm@v3
+        uses: pdm-project/setup-pdm@v4.1
 
       - name: 'Publish release to PyPI'
         uses: pypa/gh-action-pypi-publish@release/v1

@@ -36,7 +36,6 @@ jobs:
           #SHELLCODESTART
 
           set -euo pipefail
-          # set -x
 
           # Define variables
 
