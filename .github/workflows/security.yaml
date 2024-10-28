@@ -50,7 +50,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: "Setup PDM for build commands"
-        uses: pdm-project/setup-pdm@v4
+        uses: pdm-project/setup-pdm@v4.1
         with:
           python-version: ${{ matrix.python-version }}
 
