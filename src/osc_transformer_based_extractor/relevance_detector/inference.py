@@ -19,7 +19,7 @@ def validate_path_exists(path: str, which_path: str):
     """
     if not os.path.exists(path):
         raise ValueError(f"{which_path}: {path} does not exist.")
-  
+
 
 def resolve_model_path(model_path: str):
     """

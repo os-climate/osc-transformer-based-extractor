@@ -86,9 +86,7 @@ def inference(
     tokenizer_path: str = typer.Argument(
         ..., help="Path to the tokenizer directory OR name on huggingface."
     ),
-    batch_size: int = typer.Argument(
-        16, help="Batch size to process the rows"
-    ),
+    batch_size: int = typer.Argument(16, help="Batch size to process the rows"),
     threshold: float = typer.Argument(
         0.5, help="Threshold value for prediction confidence."
     ),

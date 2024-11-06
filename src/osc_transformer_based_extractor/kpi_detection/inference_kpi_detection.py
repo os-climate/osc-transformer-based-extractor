@@ -64,12 +64,16 @@ def get_batch_inference_kpi_detection(
     Returns:
         list of dict: List of dictionaries containing answers, scores, and positions.
     """
-    results = question_answerer(questions, contexts, batch_size=batch_size)  # Adjust batch size as needed
+    results = question_answerer(
+        questions, contexts, batch_size=batch_size
+    )  # Adjust batch size as needed
     return results
 
 
 def run_full_inference_kpi_detection(
-    data_file_path: str, output_path: str, model_path: str,
+    data_file_path: str,
+    output_path: str,
+    model_path: str,
     batch_size: int,
 ):
     """
@@ -102,21 +106,24 @@ def run_full_inference_kpi_detection(
         print("Using CPU")
 
     # Initialize the question-answering pipeline
-    question_answerer = pipeline(
-        "question-answering", model=model_path, device=device
-    )
+    question_answerer = pipeline("question-answering", model=model_path, device=device)
 
     results = []
 
     # Process in batches
-    for start_idx in tqdm(range(0, data.shape[0], batch_size), desc="Processing Batches"):
+    for start_idx in tqdm(
+        range(0, data.shape[0], batch_size), desc="Processing Batches"
+    ):
         end_idx = min(start_idx + batch_size, data.shape[0])
         batch_questions = data["question"].iloc[start_idx:end_idx].tolist()
         batch_contexts = data["context"].iloc[start_idx:end_idx].tolist()
 
         # Perform batch inference
         batch_results = get_batch_inference_kpi_detection(
-            batch_questions, batch_contexts, question_answerer, batch_size
+            questions=batch_questions,
+            contexts=batch_contexts,
+            question_answerer=question_answerer,
+            batch_size=batch_size,
         )
 
         for result in batch_results:
