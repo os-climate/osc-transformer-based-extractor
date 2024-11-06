@@ -3,11 +3,12 @@
 """
 
 import os
+import torch
 import pandas as pd
 from pathlib import Path
 from tqdm import tqdm
-import torch
 from transformers import pipeline, AutoConfig
+from transformers.pipelines import QuestionAnsweringPipeline
 
 
 def resolve_model_path(model_path: str):
@@ -48,29 +49,28 @@ def validate_path_exists(path: str, which_path: str):
         raise ValueError(f"{which_path}: {path} does not exist.")
 
 
-def get_inference_kpi_detection(question: str, context: str, model_path: str, device):
+def get_batch_inference_kpi_detection(
+    questions, contexts, question_answerer: QuestionAnsweringPipeline, batch_size
+):
     """
-    Performs kpi-detection inference using a specified model.
+    Perform batch inference using the question-answering pipeline.
 
     Args:
-        question (str): The question to be answered.
-        context (str): The context in which to find the answer.
-        model_path (str): Path to the pre-trained model to be used for inference.
+        questions (list): List of questions.
+        contexts (list): List of contexts.
+        question_answerer (QuestionAnsweringPipeline): The question-answering pipeline.
+        batch_size (int): The batch size for inference.
 
     Returns:
-        tuple: A tuple containing:
-            - answer (str): The predicted answer.
-            - score (float): The confidence score of the prediction.
-            - start (int): The start position of the answer in the context.
-            - end (int): The end position of the answer in the context.
+        list of dict: List of dictionaries containing answers, scores, and positions.
     """
-    question_answerer = pipeline("question-answering", model=model_path, device=device)
-    result = question_answerer(question=question, context=context)
-    return result["answer"], result["score"], result["start"], result["end"]
+    results = question_answerer(questions, contexts, batch_size=batch_size)  # Adjust batch size as needed
+    return results
 
 
 def run_full_inference_kpi_detection(
-    data_file_path: str, output_path: str, model_path: str
+    data_file_path: str, output_path: str, model_path: str,
+    batch_size: int,
 ):
     """
     Runs full inference on a dataset of questions and contexts, and saves the results.
@@ -80,6 +80,7 @@ def run_full_inference_kpi_detection(
             The dataset should have columns 'question' and 'context'.
         output_path (str): Path to the directory where the output Excel file will be saved.
         model_path (str): Path to the pre-trained model to be used for inference.
+        batch_size (int): The batch size for inference.
 
     Returns:
         None: The function saves the resulting DataFrame to an Excel file and prints a success message.
@@ -90,7 +91,6 @@ def run_full_inference_kpi_detection(
 
     data = pd.read_csv(data_file_path)
 
-    # Dynamically detect the device: CUDA, MPS, or CPU
     if torch.cuda.is_available():
         device = torch.device("cuda")  # Use NVIDIA GPU
         print("Using CUDA GPU")
@@ -101,19 +101,35 @@ def run_full_inference_kpi_detection(
         device = torch.device("cpu")  # Fallback to CPU
         print("Using CPU")
 
-    result = []
-    for _, row in tqdm(data.iterrows(), total=data.shape[0], desc="Processing Rows"):
-        question = row["question"]
-        context = row["context"]
-        answer, score, start, end = get_inference_kpi_detection(
-            question, context, model_path, device
-        )
-        result.append(
-            {"predicted_answer": answer, "start": start, "end": end, "score": score}
+    # Initialize the question-answering pipeline
+    question_answerer = pipeline(
+        "question-answering", model=model_path, device=device
+    )
+
+    results = []
+
+    # Process in batches
+    for start_idx in tqdm(range(0, data.shape[0], batch_size), desc="Processing Batches"):
+        end_idx = min(start_idx + batch_size, data.shape[0])
+        batch_questions = data["question"].iloc[start_idx:end_idx].tolist()
+        batch_contexts = data["context"].iloc[start_idx:end_idx].tolist()
+
+        # Perform batch inference
+        batch_results = get_batch_inference_kpi_detection(
+            batch_questions, batch_contexts, question_answerer, batch_size
         )
 
-    df = pd.DataFrame(result)
+        for result in batch_results:
+            results.append(
+                {
+                    "predicted_answer": result["answer"],
+                    "start": result["start"],
+                    "end": result["end"],
+                    "score": result["score"],
+                }
+            )
 
+    df = pd.DataFrame(results)
     combined_df = pd.concat([data, df], axis=1)
 
     file_name = Path(output_path) / "output.xlsx"

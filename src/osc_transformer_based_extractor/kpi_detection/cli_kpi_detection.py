@@ -81,6 +81,9 @@ def inference_qna(
     model_path: str = typer.Argument(
         ..., help="Path to the pre-trained model directory OR name on huggingface."
     ),
+    batch_size: int = typer.Argument(
+        16, help="The batch size for inference."
+    ),
 ):
     """Perform inference using a pre-trained model on a dataset of kpis and contexts, saving an output Excel file."""
     try:
@@ -91,6 +94,7 @@ def inference_qna(
             data_file_path=data_file_path,
             output_path=output_path,
             model_path=model_path,
+            batch_size=batch_size
         )
 
         typer.echo("Inference completed successfully!")
