@@ -1,8 +1,3 @@
-"""This module contains utility functions for performing inference using pre-trained sequence classification models."""
-
-# Module: inference
-# Author: Tanishq-ids
-
 import os
 import torch
 import pandas as pd
@@ -10,30 +5,6 @@ import json
 from pathlib import Path
 from tqdm import tqdm
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, AutoConfig
-
-
-def resolve_model_path(model_path: str):
-    """
-    Resolves whether the given `model_path` is a Hugging Face model name or a local system path.
-
-    - If the `model_path` refers to a Hugging Face model (e.g., "bert-base-uncased"), the function will return the
-      model name as a string.
-    - If the `model_path` refers to a valid local system path, the function will convert it into a `Path` object.
-    - If neither, the function raises a `ValueError`.
-    """
-
-    # Check if it's a local path
-    if os.path.exists(model_path):
-        return Path(model_path)
-
-    # Check if it's a Hugging Face model name
-    try:
-        AutoConfig.from_pretrained(model_path)
-        return model_path  # It's a Hugging Face model name, return as string
-    except Exception:
-        raise ValueError(
-            f"{model_path} is neither a valid Hugging Face model nor a local file path."
-        )
 
 
 def validate_path_exists(path: str, which_path: str):
@@ -48,28 +19,75 @@ def validate_path_exists(path: str, which_path: str):
     """
     if not os.path.exists(path):
         raise ValueError(f"{which_path}: {path} does not exist.")
+  
+
+def resolve_model_path(model_path: str):
+    """
+    Resolves whether the given `model_path` is a Hugging Face model name or a local system path.
+    """
+    if os.path.exists(model_path):
+        return Path(model_path)
+    try:
+        AutoConfig.from_pretrained(model_path)
+        return model_path
+    except Exception:
+        raise ValueError(
+            f"{model_path} is neither a valid Hugging Face model nor a local file path."
+        )
 
 
-def get_inference(
-    question: str, context: str, model_path: str, tokenizer_path: str, threshold: float
+def get_batch_inference(questions, contexts, model, tokenizer, device, threshold):
+    """
+    Perform batch inference using the model and tokenizer.
+    """
+    # Tokenize the batch of questions and contexts
+    inputs = tokenizer(
+        questions,
+        contexts,
+        return_tensors="pt",
+        truncation=True,
+        padding=True,
+        max_length=512,
+    )
+
+    # Move inputs to the device
+    inputs = {key: val.to(device) for key, val in inputs.items()}
+
+    # Forward pass
+    with torch.no_grad():
+        outputs = model(**inputs)
+
+    # Apply softmax to get probabilities
+    probabilities = torch.softmax(outputs.logits, dim=1)
+
+    # Probability of the positive class (label 1)
+    positive_class_probs = probabilities[:, 1].cpu().numpy()
+    labels = (positive_class_probs >= threshold).astype(int)
+
+    return labels, positive_class_probs
+
+
+def run_full_inference(
+    json_folder_path: str,
+    kpi_mapping_path: str,
+    output_path: str,
+    model_path: str,
+    tokenizer_path: str,
+    batch_size: int,
+    threshold: float,
 ):
     """
-    Perform inference using a pre-trained sequence classification model.
-
-    Parameters:
-        question (str): The question for inference.
-        context (str): The context to be analyzed.
-        model_path (str): Path to the pre-trained model directory OR name on huggingface.
-        tokenizer_path (str): Path to the tokenizer directory OR name on huggingface.
-        threshold (float): The threshold for the inference score.
-
-    Returns:
-        int: Predicted label ID (0 or 1).
-        float: class probability
+    Perform inference on JSON files in a specified folder and save the results to Excel files.
     """
-    model_path = str(Path(model_path))
-    tokenizer_path = str(Path(tokenizer_path))
+    kpi_mapping_path = str(Path(kpi_mapping_path))
+    json_folder_path = str(Path(json_folder_path))
+    output_path = str(Path(output_path))
 
+    # Resolve model and tokenizer paths
+    model_path = resolve_model_path(model_path)
+    tokenizer_path = resolve_model_path(tokenizer_path)
+
+    # Load model and tokenizer once
     # Dynamically detect the device: CUDA, MPS, or CPU
     if torch.cuda.is_available():
         device = torch.device("cuda")  # Use NVIDIA GPU
@@ -82,74 +100,11 @@ def get_inference(
         print("Using CPU")
 
     print(f"Using device: {device}")  # Print device to confirm
-
-    # Load model and tokenizer
     model = AutoModelForSequenceClassification.from_pretrained(model_path).to(device)
-    tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
+    tokenizer = AutoTokenizer.from_pretrained(tokenizer_path, use_fast=True)
+    model.eval()  # Set model to evaluation mode
 
-    # Tokenize inputs
-    inputs = tokenizer(
-        question,
-        context,
-        return_tensors="pt",
-        truncation=True,
-        padding=True,
-        max_length=512,
-    )
-
-    # Move tokenized inputs to the same device as the model
-    inputs = {key: val.to(device) for key, val in inputs.items()}
-
-    # Forward pass
-    with torch.no_grad():
-        outputs = model(**inputs)
-
-    # Apply softmax to get probabilities
-    probabilities = torch.softmax(outputs.logits, dim=1)
-
-    # Probability of the positive class (label 1)
-    positive_class_prob = probabilities[0, 1].item()
-
-    label = 1 if positive_class_prob >= threshold else 0
-
-    return label, positive_class_prob
-
-
-def run_full_inference(
-    json_folder_path: str,
-    kpi_mapping_path: str,
-    output_path: str,
-    model_path: str,
-    tokenizer_path: str,
-    threshold: float,
-):
-    """
-    Perform inference on JSON files in a specified folder and save the results to Excel files.
-
-    This function reads JSON files from a specified folder, processes the data, merges it with a KPI mapping,
-    performs inference using a specified model and tokenizer, and saves the results to Excel files.
-
-    Args:
-        json_folder_path (str): Path to the folder containing JSON files to process.
-        kpi_mapping_path (str): Path to the CSV file containing KPI mappings.
-        output_path (str): Path to the folder where the output Excel files will be saved.
-        model_path (str): Path to the model used for inference (local or Huggingface).
-        tokenizer_path (str): Path to the tokenizer used for inference (local or Huggingface).
-        threshold (float): Threshold value for the inference process.
-
-    Returns:
-        None
-
-    Raises:
-        Exception: If there is an error reading or processing the JSON files, or saving the Excel files.
-    """
-    kpi_mapping_path = str(Path(kpi_mapping_path))
-    json_folder_path = str(Path(json_folder_path))
-    output_path = str(Path(output_path))
-    model_path = resolve_model_path(model_path)
-    tokenizer_path = resolve_model_path(tokenizer_path)
-
-    # Read the KPI mapping outside the loop
+    # Read the KPI mapping
     kpi_mapping = pd.read_csv(kpi_mapping_path)
     kpi_mapping = kpi_mapping[["kpi_id", "question"]]
 
@@ -189,19 +144,18 @@ def run_full_inference(
             labels = []
             probs = []
 
-            # Iterate over the rows of the DataFrame and perform inference
-            for _, row in tqdm(merged_df.iterrows(), total=merged_df.shape[0]):
-                question = row["question"]
-                context = row["paragraph"]
-                label, prob = get_inference(
-                    question=question,
-                    context=context,
-                    model_path=model_path,
-                    tokenizer_path=tokenizer_path,
-                    threshold=threshold,
+            # Perform inference in batches
+            for start_idx in tqdm(range(0, merged_df.shape[0], batch_size)):
+                end_idx = min(start_idx + batch_size, merged_df.shape[0])
+                batch_questions = merged_df["question"].iloc[start_idx:end_idx].tolist()
+                batch_contexts = merged_df["paragraph"].iloc[start_idx:end_idx].tolist()
+
+                batch_labels, batch_probs = get_batch_inference(
+                    batch_questions, batch_contexts, model, tokenizer, device, threshold
                 )
-                labels.append(label)
-                probs.append(prob)
+
+                labels.extend(batch_labels)
+                probs.extend(batch_probs)
 
             # Add results to the DataFrame
             merged_df["paragraph_relevance_flag"] = labels

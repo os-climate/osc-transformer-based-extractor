@@ -10,6 +10,7 @@ This script performs the following steps:
 """
 
 import os
+import shutil
 import pandas as pd
 import torch
 from transformers import (
@@ -150,6 +151,7 @@ def fine_tune_model(
     batch_size,
     learning_rate,
     output_dir,
+    export_model_name,
     save_steps,
 ):
     """
@@ -164,6 +166,7 @@ def fine_tune_model(
         batch_size (int): Batch size for training.
         learning_rate (float): Learning rate for trainig
         output_dir (str): Directory where the model will be saved during training.
+        export_model_name (str): The name to export the trained model
         save_steps (int): Number of steps before saving the model during training.
     """
     # Load your dataset into a pandas DataFrame
@@ -210,11 +213,14 @@ def fine_tune_model(
         device,
     )
 
-    saved_model_path = os.path.join(output_dir, "saved_model")
+    saved_model_path = os.path.join(output_dir, export_model_name)
+    os.makedirs(saved_model_path, exist_ok=True)
+
+    checkpoint_dir = os.path.join(saved_model_path, "checkpoints")
     os.makedirs(saved_model_path, exist_ok=True)
 
     training_args = TrainingArguments(
-        output_dir=saved_model_path,
+        output_dir=checkpoint_dir,
         evaluation_strategy="epoch",  # Evaluate at the end of each epoch
         logging_dir="./logs",  # Directory for logs
         logging_steps=10,  # Log every 10 steps
@@ -228,7 +234,7 @@ def fine_tune_model(
         save_strategy="epoch",
         load_best_model_at_end=True,
         metric_for_best_model="eval_loss",
-        greater_is_better=True,
+        greater_is_better=False,
         save_total_limit=1,
     )
 
@@ -242,6 +248,12 @@ def fine_tune_model(
 
     # Start Training
     trainer.train()
+
+    # Save the final trained model and config
+    trainer.save_model(saved_model_path)
+
+    # Save the tokenizer manually
+    tokenizer.save_pretrained(saved_model_path)
 
     # Evaluate the model
     eval_result = trainer.evaluate(eval_dataset)
@@ -269,3 +281,8 @@ def fine_tune_model(
         print(f"Input: {tokenizer.decode(input_ids, skip_special_tokens=True)}")
         print(f"True Label: {true_label}, Predicted Label: {predicted_label}")
         print("\n")
+
+    try:
+        shutil.rmtree(checkpoint_dir)
+    except OSError:
+        pass
