@@ -32,7 +32,7 @@ jobs:
           python-version: ${{ env.python-version }}
 
       - name: "Setup PDM for build commands"
-        uses: pdm-project/setup-pdm@v4.1
+        uses: pdm-project/setup-pdm@v4.2
         with:
           python-version: ${{ env.python-version }}
 
