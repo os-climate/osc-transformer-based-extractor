@@ -51,7 +51,7 @@ jobs:
           python-version: ${{ env.python-version }}
 
       - name: "Update Python dependencies"
-        uses: pdm-project/update-deps-action@v1.9
+        uses: pdm-project/update-deps-action@v1.10
         with:
           sign-off-commit: "true"
           token: ${{ github.token }}
