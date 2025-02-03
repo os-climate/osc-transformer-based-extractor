@@ -111,6 +111,6 @@ def test_run_full_inference_kpi_detection(
     # Mocked `to_excel` should be called once with the expected data and output file path
     mock_to_excel.assert_called_once()
     pd.testing.assert_frame_equal(mock_to_excel.call_args[0][0], expected_output_data)
-    assert (
-        mock_to_excel.call_args[0][1] == output_file
-    ), "Output file path is incorrect."
+    assert mock_to_excel.call_args[0][1] == output_file, (
+        "Output file path is incorrect."
+    )
