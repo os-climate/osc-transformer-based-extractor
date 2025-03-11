@@ -197,30 +197,28 @@ def run_full_inference_kpi_detection(
         ]
     ]
 
-    authenticator_model = AutoModelForCausalLM.from_pretrained(
+    verifier_model = AutoModelForCausalLM.from_pretrained(
         "microsoft/Phi-3.5-mini-instruct", torch_dtype="auto", trust_remote_code=True
     ).to(device)
 
-    authenticator_tokenizer = AutoTokenizer.from_pretrained(
+    verifier_tokenizer = AutoTokenizer.from_pretrained(
         "microsoft/Phi-3.5-mini-instruct"
     )
-    authenticated_df = llm_2fa(
-        combined_df, authenticator_model, authenticator_tokenizer, device
-    )
+    verified_df = llm_2fv(combined_df, verifier_model, verifier_tokenizer, device)
 
     file_name = Path(output_path) / "output.xlsx"
-    authenticated_df.to_excel(file_name, index=False)
+    verified_df.to_excel(file_name, index=False)
     print(f"Successfully SAVED resulting file at {file_name}")
 
 
-def llm_2fa(
+def llm_2fv(
     df: pd.DataFrame,
-    authenticator_model: PreTrainedModel,
-    authenticator_tokenizer: PreTrainedTokenizer,
+    verifier_model: PreTrainedModel,
+    verifier_tokenizer: PreTrainedTokenizer,
     device: torch.device,
 ) -> pd.DataFrame:
     """
-    Processes a DataFrame of PDF-extracted questions and answers, uses an LLM-based authenticator
+    Processes a DataFrame of PDF-extracted questions and answers, uses an LLM-based verifier
     to select the most relevant paragraph-answer pair, and returns the most relevant results.
 
     Args:
@@ -232,9 +230,9 @@ def llm_2fa(
             - 'question': Question related to the KPI.
             - 'context': Paragraph context from the PDF.
             - 'predicted_answer': Answer predicted for the context.
-        authenticator_model (PreTrainedModel):
+        verifier_model (PreTrainedModel):
             The language model used to evaluate paragraph-answer pairs.
-        authenticator_tokenizer (PreTrainedTokenizer):
+        verifier_tokenizer (PreTrainedTokenizer):
             Tokenizer associated with the language model.
         device (torch.device):
             Device to run the model on, e.g., 'cpu' or 'cuda'.
@@ -269,18 +267,16 @@ def llm_2fa(
             f"{combined_pairs}\n\n"
             f"### Task:\n"
             f"1. Identify which **paragraph-answer pair** is the most relevant.\n"
-            f"2. Give me the page number. \n\n"
+            f"2. Give me the page number.\n\n"
             f"3. Provide a clear and concise explanation for your choice, considering the content.\n\n"
             f"### Response:\n"
         )
 
-        inputs = authenticator_tokenizer(content, return_tensors="pt").to(device)
-        outputs = authenticator_model.generate(
+        inputs = verifier_tokenizer(content, return_tensors="pt").to(device)
+        outputs = verifier_model.generate(
             **inputs, max_new_tokens=500, temperature=0.0, do_sample=False
         )
-        output_text = authenticator_tokenizer.decode(
-            outputs[0], skip_special_tokens=True
-        )
+        output_text = verifier_tokenizer.decode(outputs[0], skip_special_tokens=True)
 
         num = extract_paragraph_number(output_text)
         result_rows.append(group.iloc[num - 1])
