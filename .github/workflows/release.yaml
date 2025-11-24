@@ -120,7 +120,7 @@ jobs:
       - name: "Extract project/repository naming"
         id: naming
         # yamllint disable-line rule:line-length
-        uses: lfit/releng-reusable-workflows/.github/actions/python-project-name-action@431c4e424c15544f98ec1321f6668f655c238d3a # 2025-02-10
+        uses: lfit/releng-reusable-workflows/.github/actions/python-project-name-action@e50c0ef6e1156bbff820f07ab98a44f1e10010a7 # 2025-02-10
 
       - name: "⬇ Download build artefacts"
         uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
@@ -180,7 +180,7 @@ jobs:
       - name: "Extract project/repository naming"
         id: naming
         # yamllint disable-line rule:line-length
-        uses: lfit/releng-reusable-workflows/.github/actions/python-project-name-action@431c4e424c15544f98ec1321f6668f655c238d3a # 2025-02-10
+        uses: lfit/releng-reusable-workflows/.github/actions/python-project-name-action@e50c0ef6e1156bbff820f07ab98a44f1e10010a7 # 2025-02-10
 
       - name: "⬇ Download build artefacts"
         uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
