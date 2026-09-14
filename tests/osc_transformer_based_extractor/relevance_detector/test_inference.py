@@ -4,14 +4,16 @@ This module contains test cases for the inference functions in the
 osc_transformer_based_extractor.inference module.
 """
 
-import os
 import json
-from unittest.mock import patch, mock_open, MagicMock
+import os
 from pathlib import Path
-import pandas as pd
+from unittest.mock import MagicMock, mock_open, patch
+
 import numpy as np
-import torch
+import pandas as pd
 import pytest
+import torch
+
 from osc_transformer_based_extractor.relevance_detector.inference import (
     get_batch_inference,
     run_full_inference,
