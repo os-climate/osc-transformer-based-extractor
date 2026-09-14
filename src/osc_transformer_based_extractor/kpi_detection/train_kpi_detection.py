@@ -21,20 +21,21 @@ Example usage:
     )
 """
 
-import pandas as pd
-from functools import partial
 import os
+from functools import partial
+
+import numpy as np
+import pandas as pd
+import torch
 from datasets import Dataset, DatasetDict
+from sklearn.model_selection import train_test_split
 from transformers import (
     AutoModelForQuestionAnswering,
-    TrainingArguments,
-    Trainer,
     AutoTokenizer,
     DefaultDataCollator,
+    Trainer,
+    TrainingArguments,
 )
-import torch
-import numpy as np
-from sklearn.model_selection import train_test_split
 
 
 def check_csv_columns_kpi_detection(file_path):
