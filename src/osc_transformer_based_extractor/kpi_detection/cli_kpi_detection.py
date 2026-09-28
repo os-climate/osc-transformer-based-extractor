@@ -1,13 +1,15 @@
-import typer
 import os
-from .train_kpi_detection import (
-    train_kpi_detection,
-    check_output_dir,
-    check_csv_columns_kpi_detection,
-)
+
+import typer
+
 from .inference_kpi_detection import (
     run_full_inference_kpi_detection,
     validate_path_exists,
+)
+from .train_kpi_detection import (
+    check_csv_columns_kpi_detection,
+    check_output_dir,
+    train_kpi_detection,
 )
 
 # Subcommand app for kpi_detection
@@ -98,5 +100,5 @@ def inference_qna(
         typer.echo("Inference completed successfully!")
 
     except ValueError as ve:
-        typer.echo(f"Error: {str(ve)}")
+        typer.echo(f"Error: {ve!s}")
         raise typer.Exit(code=1)
