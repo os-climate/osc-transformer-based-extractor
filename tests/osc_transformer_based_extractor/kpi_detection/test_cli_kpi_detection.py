@@ -1,11 +1,12 @@
 """Test File for cli_kpi_detection"""
 
-from unittest.mock import patch
-from pathlib import Path
 import shutil
+from pathlib import Path
 from tempfile import TemporaryDirectory
-from typer.testing import CliRunner
+from unittest.mock import patch
+
 import pytest
+from typer.testing import CliRunner
 
 from osc_transformer_based_extractor.kpi_detection.cli_kpi_detection import (
     kpi_detection_app,

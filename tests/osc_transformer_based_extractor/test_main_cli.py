@@ -6,6 +6,7 @@ osc_transformer_based_extractor.cli module.
 
 import pytest
 from typer.testing import CliRunner
+
 from osc_transformer_based_extractor.main_cli import (
     app,
 )  # Adjust the import based on your package structure
