@@ -1,11 +1,13 @@
-import typer
 import os
+
+import typer
+
 from .fine_tune import (
     check_csv_columns,
     check_output_dir,
     fine_tune_model,
 )
-from .inference import validate_path_exists, run_full_inference
+from .inference import run_full_inference, validate_path_exists
 
 # Subcommand app for relevance_detector
 relevance_detector_app = typer.Typer()
@@ -110,5 +112,5 @@ def inference(
         typer.echo("Inference completed successfully!")
 
     except ValueError as ve:
-        typer.echo(f"Error: {str(ve)}")
+        typer.echo(f"Error: {ve!s}")
         raise typer.Exit(code=1)
