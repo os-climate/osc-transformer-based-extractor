@@ -1,6 +1,7 @@
 import typer
-from .relevance_detector.cli_relevance_detector import relevance_detector_app
+
 from .kpi_detection.cli_kpi_detection import kpi_detection_app
+from .relevance_detector.cli_relevance_detector import relevance_detector_app
 
 # Main Typer app
 app = typer.Typer(name="osc-transformer-based-extractor")

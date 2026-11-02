@@ -9,21 +9,22 @@ This script performs the following steps:
 5. Saves the fine-tuned model and tokenizer.
 """
 
+import json
 import os
 import shutil
+import time
+
 import pandas as pd
 import torch
-import json
-import time
+from sklearn.metrics import accuracy_score, precision_recall_fscore_support
+from sklearn.model_selection import train_test_split
+from torch.utils.data import Dataset
 from transformers import (
-    TrainingArguments,
-    Trainer,
     AutoModelForSequenceClassification,
     AutoTokenizer,
+    Trainer,
+    TrainingArguments,
 )
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, precision_recall_fscore_support
-from torch.utils.data import Dataset
 
 
 def check_csv_columns(file_path):
