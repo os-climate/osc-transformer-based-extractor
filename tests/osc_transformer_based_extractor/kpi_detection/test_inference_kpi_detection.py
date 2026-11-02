@@ -1,9 +1,10 @@
 """Test File for inference_kpi_detection"""
 
-from unittest.mock import patch, MagicMock
-from tempfile import TemporaryDirectory
-from pathlib import Path
 import shutil
+from pathlib import Path
+from tempfile import TemporaryDirectory
+from unittest.mock import MagicMock, patch
+
 import pandas as pd
 import pytest
 
