@@ -3,15 +3,21 @@
 """
 
 import os
-import torch
-import pandas as pd
-from pathlib import Path
-from tqdm import tqdm
-from transformers import pipeline, AutoConfig, AutoModelForCausalLM, AutoTokenizer
-from transformers import PreTrainedModel, PreTrainedTokenizer
-from transformers.pipelines import QuestionAnsweringPipeline
 import re
+from pathlib import Path
 
+import pandas as pd
+import torch
+from tqdm import tqdm
+from transformers import (
+    AutoConfig,
+    AutoModelForCausalLM,
+    AutoTokenizer,
+    PreTrainedModel,
+    PreTrainedTokenizer,
+    pipeline,
+)
+from transformers.pipelines import QuestionAnsweringPipeline
 
 torch.random.manual_seed(0)
 
